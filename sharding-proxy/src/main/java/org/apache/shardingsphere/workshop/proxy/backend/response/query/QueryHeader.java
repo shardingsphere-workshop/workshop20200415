@@ -19,6 +19,7 @@ package org.apache.shardingsphere.workshop.proxy.backend.response.query;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.shardingsphere.sql.parser.binder.metadata.column.ColumnMetaData;
 import org.apache.shardingsphere.sql.parser.binder.segment.select.projection.Projection;
 import org.apache.shardingsphere.sql.parser.binder.segment.select.projection.ProjectionsContext;
 import org.apache.shardingsphere.sql.parser.binder.segment.select.projection.impl.ColumnProjection;
@@ -75,6 +76,20 @@ public final class QueryHeader {
         autoIncrement = resultSetMetaData.isAutoIncrement(columnIndex);
         table= resultSetMetaData.getTableName(columnIndex);
         primaryKey = false;
+    }
+    
+    public QueryHeader(final String schemaName, final String tableName, final ColumnMetaData columnMetaData) {
+        this.columnName = columnMetaData.getName();
+        schema = schemaName;
+        columnLabel = columnMetaData.getName();
+        columnLength = 100;
+        columnType = columnMetaData.getDataType();
+        decimals = 0;
+        signed = false;
+        notNull = true;
+        autoIncrement = columnMetaData.isGenerated();
+        table = tableName;
+        primaryKey = columnMetaData.isPrimaryKey();
     }
     
     private static String getColumnName(final ProjectionsContext projectionsContext, final ResultSetMetaData resultSetMetaData, final int columnIndex) throws SQLException {

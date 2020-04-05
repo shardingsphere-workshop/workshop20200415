@@ -29,7 +29,5 @@ import java.util.List;
 @Getter
 public final class QueryData {
     
-    private final List<Integer> columnTypes;
-    
     private final List<Object> data;
 }

@@ -18,6 +18,7 @@
 package org.apache.shardingsphere.workshop.proxy.backend;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Preconditions;
 import lombok.Getter;
 import org.apache.shardingsphere.sql.parser.binder.metadata.column.ColumnMetaData;
 import org.apache.shardingsphere.sql.parser.binder.metadata.table.TableMetaData;
@@ -62,7 +63,7 @@ public class CSVLogicSchema {
      * @throws IOException IO exception
      */
     public void init() throws IOException {
-        File csvDirectory = new File(CSVLogicSchema.class.getResource("/schema").getFile());
+        File csvDirectory = new File(CSVLogicSchema.class.getResource("/data").getFile());
         File[] files = csvDirectory.listFiles((file) -> file.getName().endsWith(".csv"));
         if (null == files) {
             return;
@@ -85,8 +86,20 @@ public class CSVLogicSchema {
         Collection<ColumnMetaData> columnMetaDataList = new LinkedList<>();
         for (String each : header) {
             String[] column = each.split(":");
+            Preconditions.checkState(column.length == 2, "csv file header should be column:type pattern.");
             columnMetaDataList.add(new ColumnMetaData(column[0], 1, column[1], false, false, true));
         }
         metadata.put(tableName, new TableMetaData(columnMetaDataList, new LinkedList<>()));
+    }
+    
+    /**
+     * Get CSV reader.
+     *
+     * @param name file name
+     * @return CSV reader
+     * @throws FileNotFoundException File not found exception
+     */
+    public CSVReader getCSVReader(final String name) throws FileNotFoundException {
+        return new CSVReader(new InputStreamReader(new FileInputStream(repository.get(name)), StandardCharsets.UTF_8));
     }
 }

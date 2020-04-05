@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.sql.parser.SQLParserEngine;
 import org.apache.shardingsphere.sql.parser.sql.statement.SQLStatement;
 import org.apache.shardingsphere.sql.parser.sql.statement.dml.DMLStatement;
+import org.apache.shardingsphere.sql.parser.sql.statement.dml.SelectStatement;
 
 /**
  * Text protocol backend handler factory.
@@ -41,15 +42,9 @@ public final class TextProtocolBackendHandlerFactory {
             return new SkipBackendHandler();
         }
         SQLStatement sqlStatement = new SQLParserEngine("MySQL").parse(sql, false);
-        if (sqlStatement instanceof DMLStatement) {
-        
+        if (sqlStatement instanceof SelectStatement) {
+            return new CSVQueryBackendHandler((SelectStatement) sqlStatement);
         }
-//        if (sqlStatement instanceof TCLStatement) {
-//            return createTCLBackendHandler(sql, (TCLStatement) sqlStatement, backendConnection);
-//        }
-//        if (sqlStatement instanceof DALStatement) {
-//            return createDALBackendHandler((DALStatement) sqlStatement, sql, backendConnection);
-//        }
         return new SkipBackendHandler();
     }
     

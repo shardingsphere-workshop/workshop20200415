@@ -23,7 +23,6 @@ import org.apache.shardingsphere.workshop.proxy.backend.response.BackendResponse
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Query response.
@@ -34,5 +33,5 @@ public final class QueryResponse implements BackendResponse {
     
     private final List<QueryHeader> queryHeaders;
     
-    private final List<Map<String, Object>> queryResults = new LinkedList<>();
+    private final List<Object[]> queryResults = new LinkedList<>();
 }
