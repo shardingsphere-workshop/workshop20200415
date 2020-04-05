@@ -23,9 +23,9 @@ import org.apache.shardingsphere.workshop.proxy.backend.response.query.QueryData
 import java.sql.SQLException;
 
 /**
- * Database communication engine.
+ * communication engine.
  */
-public interface DatabaseCommunicationEngine {
+public interface CommunicationEngine {
     
     /**
      * Execute command.

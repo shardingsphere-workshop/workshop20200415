@@ -20,6 +20,9 @@ package org.apache.shardingsphere.workshop.proxy.backend.text;
 import com.google.common.base.Strings;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.shardingsphere.sql.parser.SQLParserEngine;
+import org.apache.shardingsphere.sql.parser.sql.statement.SQLStatement;
+import org.apache.shardingsphere.sql.parser.sql.statement.dml.DMLStatement;
 
 /**
  * Text protocol backend handler factory.
@@ -37,7 +40,10 @@ public final class TextProtocolBackendHandlerFactory {
         if (Strings.isNullOrEmpty(sql)) {
             return new SkipBackendHandler();
         }
-//        SQLStatement sqlStatement = new SQLParserEngine(databaseType.getName()).parse(sql, false);
+        SQLStatement sqlStatement = new SQLParserEngine("MySQL").parse(sql, false);
+        if (sqlStatement instanceof DMLStatement) {
+        
+        }
 //        if (sqlStatement instanceof TCLStatement) {
 //            return createTCLBackendHandler(sql, (TCLStatement) sqlStatement, backendConnection);
 //        }

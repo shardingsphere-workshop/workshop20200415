@@ -20,7 +20,10 @@ package org.apache.shardingsphere.workshop.proxy;
 import com.google.common.primitives.Ints;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.shardingsphere.workshop.proxy.backend.CSVLogicSchema;
 import org.apache.shardingsphere.workshop.proxy.frontend.ShardingProxy;
+
+import java.io.IOException;
 
 /**
  * Sharding-Proxy Bootstrap.
@@ -35,9 +38,9 @@ public final class Bootstrap {
      *
      * @param args startup arguments
      */
-    public static void main(final String[] args) {
-        int port = getPort(args);
-        ShardingProxy.getInstance().start(port);
+    public static void main(final String[] args) throws IOException {
+        CSVLogicSchema.getInstance().init();
+        ShardingProxy.getInstance().start(getPort(args));
     }
     
     private static int getPort(final String[] args) {
