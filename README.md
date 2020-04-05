@@ -21,4 +21,14 @@ order_id:long,user_id:int,status:string
 binary SQL command from mysql-client will be decoded as a plain SQL which continually parsed as SQLStatement using ANTLR, in the CSVQueryBackendHandler raw csv data
 will be read into memory according to query grammar, then return to the client based on MySQL-protocol.
 
-
+```
+mysql> select * from t_order;
++----------+---------+--------+
+| order_id | user_id | status |
++----------+---------+--------+
+| 1000001  | 10      | init   |
+| 2000001  | 20      | init   |
+| 3000001  | 30      | init   |
++----------+---------+--------+
+3 rows in set (0.05 sec)
+```
