@@ -1,0 +1,4 @@
+order_id:long,user_id:int,status:string
+1000001,10,"init"
+2000001,20,"init"
+3000001,30,"init"
