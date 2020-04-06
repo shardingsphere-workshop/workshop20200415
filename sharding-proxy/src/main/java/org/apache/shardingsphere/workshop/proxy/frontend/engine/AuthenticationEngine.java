@@ -15,29 +15,29 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.frontend.engine;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import io.netty.channel.ChannelHandlerContext;
+import org.apache.shardingsphere.workshop.proxy.transport.payload.PacketPayload;
 
 /**
- * Skip backend handler.
+ * Authentication engine.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+public interface AuthenticationEngine {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
+    /**
+     * Handshake.
+     *
+     * @param context channel handler context
+     */
+    void handshake(ChannelHandlerContext context);
     
-    @Override
-    public boolean next() {
-        return false;
-    }
-    
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    /**
+     * Authentication.
+     *
+     * @param context channel handler context
+     * @param payload packet payload
+     * @return auth finish or not
+     */
+    boolean auth(ChannelHandlerContext context, PacketPayload payload);
 }

@@ -15,25 +15,30 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.frontend.command;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.DatabasePacket;
 
 import java.sql.SQLException;
 
 /**
- * Text protocol backend handler.
+ * Query command executor.
  */
-public interface TextProtocolBackendHandler {
+public interface ComQueryCommandExecutor extends CommandExecutor {
     
     /**
-     * Execute command.
+     * Judge is error response.
      *
-     * @return backend response
-     * @throws SQLException SQL exception
+     * @return is error response or not
      */
-    BackendResponse execute() throws SQLException;
+    boolean isErrorResponse();
+    
+    /**
+     * Judge is query SQL or not.
+     *
+     * @return is query SQL or not
+     */
+    boolean isQuery();
     
     /**
      * Goto next result value.
@@ -46,8 +51,8 @@ public interface TextProtocolBackendHandler {
     /**
      * Get query data.
      *
-     * @return query data
+     * @return database packet of query data
      * @throws SQLException SQL exception
      */
-    QueryData getQueryData() throws SQLException;
+    DatabasePacket getQueryData() throws SQLException;
 }

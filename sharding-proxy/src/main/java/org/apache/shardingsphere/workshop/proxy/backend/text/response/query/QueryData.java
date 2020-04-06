@@ -15,29 +15,19 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.backend.text.response.query;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 /**
- * Skip backend handler.
+ * Query data.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+@RequiredArgsConstructor
+@Getter
+public final class QueryData {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
-    
-    @Override
-    public boolean next() {
-        return false;
-    }
-    
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    private final List<Object> data;
 }

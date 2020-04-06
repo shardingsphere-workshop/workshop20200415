@@ -15,29 +15,49 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
- * Skip backend handler.
+ * MySQL Column Field Detail Flag.
+ * 
+ * @see <a href="https://mariadb.com/kb/en/library/resultset/#field-detail-flag">Field detail flag</a>
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+@RequiredArgsConstructor
+@Getter
+public enum MySQLColumnFieldDetailFlag {
+
+    NOT_NULL(1),
+
+    PRIMARY_KEY(2),
+
+    UNIQUE_KEY(4),
+
+    MULTIPLE_KEY(8),
+
+    BLOB(16),
+
+    UNSIGNED(32),
+
+    ZEROFILL_FLAG(64),
+
+    BINARY_COLLATION(128),
+
+    ENUM(256),
+
+    AUTO_INCREMENT(512),
+
+    TIMESTAMP(1024),
+
+    SET(2048),
+
+    NO_DEFAULT_VALUE_FLAG(4096),
+
+    ON_UPDATE_NOW_FLAG(8192),
+
+    NUM_FLAG(32768);
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
-    
-    @Override
-    public boolean next() {
-        return false;
-    }
-    
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    private final int value;
 }

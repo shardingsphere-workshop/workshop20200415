@@ -15,29 +15,19 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.transport.packet.command.admin.ping;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacket;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacketType;
 
 /**
- * Skip backend handler.
+ * COM_PING command packet for MySQL.
+ * 
+ * @see <a href="https://dev.mysql.com/doc/internals/en/com-ping.html">COM_PING</a>
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+public final class MySQLComPingPacket extends MySQLCommandPacket {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
-    
-    @Override
-    public boolean next() {
-        return false;
-    }
-    
-    @Override
-    public QueryData getQueryData() {
-        return null;
+    public MySQLComPingPacket() {
+        super(MySQLCommandPacketType.COM_PING);
     }
 }

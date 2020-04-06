@@ -15,29 +15,32 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.transport.packet.command;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import lombok.RequiredArgsConstructor;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.CommandPacket;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
+import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
 
 /**
- * Skip backend handler.
+ * Command packet for MySQL.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+@RequiredArgsConstructor
+public abstract class MySQLCommandPacket implements MySQLPacket, CommandPacket {
+    
+    private final MySQLCommandPacketType type;
     
     @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
+    public final void write(final MySQLPacketPayload payload) {
+        payload.writeInt1(type.getValue());
+        doWrite(payload);
+    }
+    
+    protected void doWrite(final MySQLPacketPayload payload) {
     }
     
     @Override
-    public boolean next() {
-        return false;
-    }
-    
-    @Override
-    public QueryData getQueryData() {
-        return null;
+    public final int getSequenceId() {
+        return 0;
     }
 }

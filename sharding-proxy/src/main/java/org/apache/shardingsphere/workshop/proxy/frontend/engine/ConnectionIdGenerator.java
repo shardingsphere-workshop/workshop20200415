@@ -15,29 +15,39 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.frontend.engine;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
- * Skip backend handler.
+ * Connection ID generator.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+@NoArgsConstructor(access = AccessLevel.NONE)
+public final class ConnectionIdGenerator {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
+    private static final ConnectionIdGenerator INSTANCE = new ConnectionIdGenerator();
     
-    @Override
-    public boolean next() {
-        return false;
-    }
+    private int currentId;
     
-    @Override
-    public QueryData getQueryData() {
-        return null;
+    /**
+     * Get instance.
+     * 
+     * @return instance
+     */
+    public static ConnectionIdGenerator getInstance() {
+        return INSTANCE;
+    } 
+    
+    /**
+     * Get next connection ID.
+     * 
+     * @return next connection ID
+     */
+    public synchronized int nextId() {
+        if (currentId >= Integer.MAX_VALUE) {
+            currentId = 0;
+        }
+        return ++currentId;
     }
 }

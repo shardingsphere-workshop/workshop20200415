@@ -15,29 +15,28 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.frontend.netty;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
+import lombok.RequiredArgsConstructor;
+import org.apache.shardingsphere.workshop.proxy.transport.codec.MySQLPacketCodec;
+
+import java.util.concurrent.ExecutorService;
 
 /**
- * Skip backend handler.
+ * Channel initializer.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+@RequiredArgsConstructor
+public final class ServerHandlerInitializer extends ChannelInitializer<SocketChannel> {
+    
+    private final ExecutorService executorService;
     
     @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
-    
-    @Override
-    public boolean next() {
-        return false;
-    }
-    
-    @Override
-    public QueryData getQueryData() {
-        return null;
+    protected void initChannel(final SocketChannel socketChannel) {
+        ChannelPipeline pipeline = socketChannel.pipeline();
+        pipeline.addLast(new MySQLPacketCodec());
+        pipeline.addLast(new FrontendChannelInboundHandler(executorService));
     }
 }

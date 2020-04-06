@@ -15,29 +15,29 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.transport.constant;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
- * Skip backend handler.
+ * MySQL client/server protocol Authentication Method.
+ *
+ * @see <a href="https://dev.mysql.com/doc/internals/en/authentication-method.html">Authentication Method</a>
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+@RequiredArgsConstructor
+@Getter
+public enum MySQLAuthenticationMethod {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
+    OLD_PASSWORD_AUTHENTICATION("mysql_old_password"),
     
-    @Override
-    public boolean next() {
-        return false;
-    }
+    SECURE_PASSWORD_AUTHENTICATION("mysql_native_password"),
     
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    CLEAR_TEXT_AUTHENTICATION("mysql_clear_password"),
+    
+    WINDOWS_NATIVE_AUTHENTICATION("authentication_windows_client"),
+    
+    SHA256("sha256_password");
+    
+    private final String methodName;
 }

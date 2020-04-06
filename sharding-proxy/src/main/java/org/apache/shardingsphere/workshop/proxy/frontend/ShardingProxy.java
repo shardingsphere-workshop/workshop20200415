@@ -23,10 +23,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.WriteBufferWaterMark;
-import io.netty.channel.epoll.Epoll;
-import io.netty.channel.epoll.EpollChannelOption;
-import io.netty.channel.epoll.EpollEventLoopGroup;
-import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
@@ -34,6 +30,10 @@ import io.netty.handler.logging.LoggingHandler;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import org.apache.shardingsphere.workshop.proxy.frontend.netty.ServerHandlerInitializer;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Sharding-Proxy.
@@ -46,6 +46,8 @@ public final class ShardingProxy {
     private EventLoopGroup bossGroup;
     
     private EventLoopGroup workerGroup;
+    
+    private ExecutorService userExecutorService;
     
     /**
      * Get instance of proxy context.
@@ -65,40 +67,10 @@ public final class ShardingProxy {
     public void start(final int port) {
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
-            bossGroup = createEventLoopGroup();
-            if (bossGroup instanceof EpollEventLoopGroup) {
-                groupsEpoll(bootstrap);
-            } else {
-                groupsNio(bootstrap);
-            }
-            ChannelFuture future = bootstrap.bind(port).sync();
-            future.channel().closeFuture().sync();
-        } finally {
-            workerGroup.shutdownGracefully();
-            bossGroup.shutdownGracefully();
-        }
-    }
-    
-    private EventLoopGroup createEventLoopGroup() {
-        return Epoll.isAvailable() ? new EpollEventLoopGroup(1) : new NioEventLoopGroup(1);
-    }
-    
-    private void groupsEpoll(final ServerBootstrap bootstrap) {
-        workerGroup = new EpollEventLoopGroup();
-        bootstrap.group(bossGroup, workerGroup)
-                .channel(EpollServerSocketChannel.class)
-                .option(EpollChannelOption.SO_BACKLOG, 128)
-                .option(EpollChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(8 * 1024 * 1024, 16 * 1024 * 1024))
-                .option(EpollChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-                .childOption(EpollChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-                .childOption(EpollChannelOption.TCP_NODELAY, true)
-                .handler(new LoggingHandler(LogLevel.INFO))
-                .childHandler(new ServerHandlerInitializer());
-    }
-    
-    private void groupsNio(final ServerBootstrap bootstrap) {
-        workerGroup = new NioEventLoopGroup();
-        bootstrap.group(bossGroup, workerGroup)
+            bossGroup = new NioEventLoopGroup(1);
+            workerGroup = new NioEventLoopGroup();
+            userExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
+            bootstrap.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 128)
                 .option(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(8 * 1024 * 1024, 16 * 1024 * 1024))
@@ -106,6 +78,13 @@ public final class ShardingProxy {
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .handler(new LoggingHandler(LogLevel.INFO))
-                .childHandler(new ServerHandlerInitializer());
+                .childHandler(new ServerHandlerInitializer(userExecutorService));
+            ChannelFuture future = bootstrap.bind(port).sync();
+            future.channel().closeFuture().sync();
+        } finally {
+            userExecutorService.shutdownNow();
+            workerGroup.shutdownGracefully();
+            bossGroup.shutdownGracefully();
+        }
     }
 }

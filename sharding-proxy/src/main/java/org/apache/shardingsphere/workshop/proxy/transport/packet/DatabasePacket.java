@@ -15,29 +15,21 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.transport.packet;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import org.apache.shardingsphere.workshop.proxy.transport.payload.PacketPayload;
 
 /**
- * Skip backend handler.
+ * Database packet.
+ *
+ * @param <T> type of packet payload
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+public interface DatabasePacket<T extends PacketPayload> {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
-    
-    @Override
-    public boolean next() {
-        return false;
-    }
-    
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    /**
+     * Write packet to byte buffer.
+     *
+     * @param payload packet payload to be written
+     */
+    void write(T payload);
 }

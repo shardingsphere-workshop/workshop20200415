@@ -22,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.shardingsphere.sql.parser.sql.statement.dml.SelectStatement;
 import org.apache.shardingsphere.workshop.proxy.backend.CSVLogicSchema;
-import org.apache.shardingsphere.workshop.proxy.backend.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.response.query.QueryHeader;
-import org.apache.shardingsphere.workshop.proxy.backend.response.query.QueryResponse;
+import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
+import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryHeader;
+import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryResponse;
 
 import java.util.Arrays;
 import java.util.Iterator;

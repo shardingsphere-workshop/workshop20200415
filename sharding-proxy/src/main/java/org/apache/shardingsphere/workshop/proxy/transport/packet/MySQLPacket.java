@@ -15,29 +15,23 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.transport.packet;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
 
 /**
- * Skip backend handler.
+ * Database packet for MySQL.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+public interface MySQLPacket extends DatabasePacket<MySQLPacketPayload> {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
+    int PAYLOAD_LENGTH = 3;
     
-    @Override
-    public boolean next() {
-        return false;
-    }
+    int SEQUENCE_LENGTH = 1;
     
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    /**
+     * Get sequence ID.
+     *
+     * @return sequence ID
+     */
+    int getSequenceId();
 }

@@ -15,29 +15,31 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
-
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+package org.apache.shardingsphere.workshop.proxy.transport.error;
 
 /**
- * Skip backend handler.
+ * SQL error code.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+public interface SQLErrorCode {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
+    /**
+     * Get error code.
+     * 
+     * @return error code
+     */
+    int getErrorCode();
     
-    @Override
-    public boolean next() {
-        return false;
-    }
+    /**
+     * Get SQL state.
+     * 
+     * @return SQL state
+     */
+    String getSqlState();
     
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    /**
+     * Get error message.
+     * 
+     * @return error message
+     */
+    String getErrorMessage();
 }

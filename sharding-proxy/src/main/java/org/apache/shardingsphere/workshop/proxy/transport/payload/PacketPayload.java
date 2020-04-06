@@ -15,29 +15,19 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.transport.payload;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import io.netty.buffer.ByteBuf;
 
 /**
- * Skip backend handler.
+ * Packet payload.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+public interface PacketPayload extends AutoCloseable {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
-    
-    @Override
-    public boolean next() {
-        return false;
-    }
-    
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    /**
+     * Get byte buf.
+     * 
+     * @return byte buf
+     */
+    ByteBuf getByteBuf();
 }

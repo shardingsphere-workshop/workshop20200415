@@ -15,29 +15,27 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.transport.error;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
- * Skip backend handler.
+ * Common error code.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+@RequiredArgsConstructor
+@Getter
+public enum CommonErrorCode implements SQLErrorCode {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
+    CIRCUIT_BREAK_MODE(10000, "C10000", "Circuit break mode is ON."),
     
-    @Override
-    public boolean next() {
-        return false;
-    }
+    UNSUPPORTED_COMMAND(10001, "C10001", "Unsupported command: [%s]"),
     
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    UNKNOWN_EXCEPTION(10002, "C10002", "Unknown exception: [%s]");
+    
+    private final int errorCode;
+    
+    private final String sqlState;
+    
+    private final String errorMessage;
 }

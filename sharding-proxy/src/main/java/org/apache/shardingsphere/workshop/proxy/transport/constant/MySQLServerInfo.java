@@ -15,29 +15,29 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.transport.constant;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
- * Skip backend handler.
+ * Sharding-Proxy's information for MySQL.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class MySQLServerInfo {
     
-    @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
+    /**
+     * Protocol version is always 0x0A.
+     */
+    public static final int PROTOCOL_VERSION = 0x0A;
     
-    @Override
-    public boolean next() {
-        return false;
-    }
+    /**
+     * Server version.
+     */
+    public static final String SERVER_VERSION = "5.6.4-Sharding-Proxy 5.0.0-RC1";
     
-    @Override
-    public QueryData getQueryData() {
-        return null;
-    }
+    /**
+     * Charset code 0x21 is utf8_general_ci.
+     */
+    public static final int CHARSET = 0x21;
 }

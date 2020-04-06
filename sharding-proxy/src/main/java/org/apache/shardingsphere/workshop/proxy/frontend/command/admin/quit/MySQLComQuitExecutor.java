@@ -15,29 +15,22 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.backend.text;
+package org.apache.shardingsphere.workshop.proxy.frontend.command.admin.quit;
 
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.BackendResponse;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.query.QueryData;
-import org.apache.shardingsphere.workshop.proxy.backend.text.response.update.UpdateResponse;
+import org.apache.shardingsphere.workshop.proxy.frontend.command.CommandExecutor;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.DatabasePacket;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.generic.MySQLOKPacket;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
- * Skip backend handler.
+ * COM_QUIT executor for MySQL.
  */
-public final class SkipBackendHandler implements TextProtocolBackendHandler {
+public final class MySQLComQuitExecutor implements CommandExecutor {
     
     @Override
-    public BackendResponse execute() {
-        return new UpdateResponse();
-    }
-    
-    @Override
-    public boolean next() {
-        return false;
-    }
-    
-    @Override
-    public QueryData getQueryData() {
-        return null;
+    public Collection<DatabasePacket> execute() {
+        return Collections.singletonList(new MySQLOKPacket(1));
     }
 }

@@ -22,7 +22,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.sql.parser.SQLParserEngine;
 import org.apache.shardingsphere.sql.parser.sql.statement.SQLStatement;
-import org.apache.shardingsphere.sql.parser.sql.statement.dml.DMLStatement;
 import org.apache.shardingsphere.sql.parser.sql.statement.dml.SelectStatement;
 
 /**
@@ -47,5 +46,4 @@ public final class TextProtocolBackendHandlerFactory {
         }
         return new SkipBackendHandler();
     }
-    
 }
