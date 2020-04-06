@@ -32,14 +32,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.locale>zh_CN</project.build.locale>
         
+        <shardingsphere.version>5.0.0-RC1-SNAPSHOT</shardingsphere.version>
+        <opencsv.version>2.3</opencsv.version>
+        
         <guava.version>18.0</guava.version>
         <gson.version>2.8.6</gson.version>
         <slf4j.version>1.7.7</slf4j.version>
-        
-        <antlr4.version>4.7.2</antlr4.version>
-        
-        <groovy.version>2.4.5</groovy.version>
-        <snakeyaml.version>1.16</snakeyaml.version>
         
         <netty.version>4.1.42.Final</netty.version>
         <commons-codec.version>1.10</commons-codec.version>
@@ -53,15 +51,6 @@
         <mockito.version>2.7.21</mockito.version>
         <logback.version>1.2.0</logback.version>
         
-        <hikari-cp.version>3.4.2</hikari-cp.version>
-        <commons-dbcp2.version>2.2.0</commons-dbcp2.version>
-        <commons-pool.version>1.6</commons-pool.version>
-        <h2.version>1.4.196</h2.version>
-        <mysql-connector-java.version>5.1.47</mysql-connector-java.version>
-        <postgresql.version>42.2.5</postgresql.version>
-        <mssql.version>6.1.7.jre8-preview</mssql.version>
-        <mariadb-java-client.version>2.4.2</mariadb-java-client.version>
-
         <!-- Plugin versions -->
         <apache-rat-plugin.version>0.12</apache-rat-plugin.version>
         <takari-maven-plugin.version>0.6.1</takari-maven-plugin.version>
@@ -99,14 +88,26 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-sql-parser-mysql</artifactId>
+                <version>${shardingsphere.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-sql-parser-binder</artifactId>
+                <version>${shardingsphere.version}</version>
+            </dependency>
+    
+            <dependency>
+                <groupId>net.sf.opencsv</groupId>
+                <artifactId>opencsv</artifactId>
+                <version>${opencsv.version}</version>
+            </dependency>
+            
+            <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>${gson.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -122,24 +123,6 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>jul-to-slf4j</artifactId>
                 <version>${slf4j.version}</version>
-            </dependency>
-            
-            <dependency>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-runtime</artifactId>
-                <version>${antlr4.version}</version>
-            </dependency>
-            
-            <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy</artifactId>
-                <version>${groovy.version}</version>
-                <classifier>indy</classifier>
-            </dependency>
-            <dependency>
-                <groupId>org.yaml</groupId>
-                <artifactId>snakeyaml</artifactId>
-                <version>${snakeyaml.version}</version>
             </dependency>
             
             <dependency>
@@ -161,37 +144,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
-            </dependency>
-            
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql-connector-java.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mariadb.jdbc</groupId>
-                <artifactId>mariadb-java-client</artifactId>
-                <version>${mariadb-java-client.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>${postgresql.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.microsoft.sqlserver</groupId>
-                <artifactId>mssql-jdbc</artifactId>
-                <version>${mssql.version}</version>
-                <scope>provided</scope>
             </dependency>
             
             <dependency>
@@ -239,31 +191,6 @@
                     <exclusion>
                         <groupId>org.slf4j</groupId>
                         <artifactId>slf4j-api</artifactId>
-                    </exclusion>
-                </exclusions>
-                <scope>test</scope>
-            </dependency>
-            
-            <dependency>
-                <groupId>com.zaxxer</groupId>
-                <artifactId>HikariCP</artifactId>
-                <version>${hikari-cp.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>commons-pool</groupId>
-                <artifactId>commons-pool</artifactId>
-                <version>${commons-pool.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-dbcp2</artifactId>
-                <version>${commons-dbcp2.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>commons-pool</groupId>
-                        <artifactId>commons-pool</artifactId>
                     </exclusion>
                 </exclusions>
                 <scope>test</scope>
@@ -729,8 +656,6 @@
         </plugins>
     </reporting>
     
-    <url>http://shardingsphere.apache.org</url>
-    <description>Distributed database middleware ecosphere</description>
     <licenses>
         <license>
             <name>Apache License 2.0</name>
@@ -738,20 +663,4 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    
-    <scm>
-        <connection>scm:git:https://github.com/apache/incubator-shardingsphere.git</connection>
-        <developerConnection>scm:git:https://github.com/apache/incubator-shardingsphere.git</developerConnection>
-        <url>https://github.com/apache/incubator-shardingsphere.git</url>
-      <tag>HEAD</tag>
-    </scm>
-    
-    <mailingLists>
-        <mailingList>
-            <name>ShardingSphere Developer List</name>
-            <post>dev@shardingsphere.incubator.apache.org</post>
-            <subscribe>dev-subscribe@shardingsphere.incubator.apache.org</subscribe>
-            <unsubscribe>dev-unsubscribe@shardingsphere.incubator.apache.org</unsubscribe>
-        </mailingList>
-    </mailingLists>
 </project>
