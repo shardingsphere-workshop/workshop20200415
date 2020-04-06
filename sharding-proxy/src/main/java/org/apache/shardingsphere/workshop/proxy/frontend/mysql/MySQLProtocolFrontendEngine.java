@@ -18,7 +18,6 @@
 package org.apache.shardingsphere.workshop.proxy.frontend.mysql;
 
 import lombok.Getter;
-import org.apache.shardingsphere.workshop.proxy.frontend.core.context.FrontendContext;
 import org.apache.shardingsphere.workshop.proxy.frontend.core.spi.DatabaseProtocolFrontendEngine;
 import org.apache.shardingsphere.workshop.proxy.frontend.mysql.auth.MySQLAuthenticationEngine;
 import org.apache.shardingsphere.workshop.proxy.frontend.mysql.command.MySQLCommandExecuteEngine;
@@ -30,8 +29,6 @@ import org.apache.shardingsphere.workshop.proxy.transport.mysql.codec.MySQLPacke
  */
 @Getter
 public final class MySQLProtocolFrontendEngine implements DatabaseProtocolFrontendEngine {
-    
-    private final FrontendContext frontendContext = new FrontendContext(false, true);
     
     private final MySQLAuthenticationEngine authEngine = new MySQLAuthenticationEngine();
     

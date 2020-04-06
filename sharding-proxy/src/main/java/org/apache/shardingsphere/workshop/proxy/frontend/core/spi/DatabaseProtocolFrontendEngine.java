@@ -17,7 +17,6 @@
 
 package org.apache.shardingsphere.workshop.proxy.frontend.core.spi;
 
-import org.apache.shardingsphere.workshop.proxy.frontend.core.context.FrontendContext;
 import org.apache.shardingsphere.workshop.proxy.frontend.core.engine.AuthenticationEngine;
 import org.apache.shardingsphere.workshop.proxy.frontend.core.engine.CommandExecuteEngine;
 import org.apache.shardingsphere.workshop.proxy.transport.core.codec.DatabasePacketCodecEngine;
@@ -26,13 +25,6 @@ import org.apache.shardingsphere.workshop.proxy.transport.core.codec.DatabasePac
  * Database protocol frontend engine.
  */
 public interface DatabaseProtocolFrontendEngine {
-    
-    /**
-     * Get frontend context.
-     *
-     * @return frontend context
-     */
-    FrontendContext getFrontendContext();
     
     /**
      * Get database packet codec engine.
