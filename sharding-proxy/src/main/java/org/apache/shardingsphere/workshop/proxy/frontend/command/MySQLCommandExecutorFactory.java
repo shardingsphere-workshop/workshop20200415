@@ -20,13 +20,11 @@ package org.apache.shardingsphere.workshop.proxy.frontend.command;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shardingsphere.workshop.proxy.frontend.command.admin.ping.MySQLComPingExecutor;
-import org.apache.shardingsphere.workshop.proxy.frontend.command.admin.quit.MySQLComQuitExecutor;
-import org.apache.shardingsphere.workshop.proxy.frontend.command.generic.MySQLUnsupportedCommandExecutor;
 import org.apache.shardingsphere.workshop.proxy.frontend.command.comquery.MySQLComQueryPacketExecutor;
+import org.apache.shardingsphere.workshop.proxy.frontend.command.generic.MySQLUnsupportedCommandExecutor;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.CommandPacket;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacketType;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.command.query.text.query.MySQLComQueryPacket;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.command.query.MySQLComQueryPacket;
 
 /**
  * Command executor factory for MySQL.
@@ -45,12 +43,8 @@ public final class MySQLCommandExecutorFactory {
     public static CommandExecutor newInstance(final MySQLCommandPacketType commandPacketType, final CommandPacket commandPacket) {
         log.debug("Execute packet type: {}, value: {}", commandPacketType, commandPacket);
         switch (commandPacketType) {
-            case COM_QUIT:
-                return new MySQLComQuitExecutor();
             case COM_QUERY:
                 return new MySQLComQueryPacketExecutor((MySQLComQueryPacket) commandPacket);
-            case COM_PING:
-                return new MySQLComPingExecutor();
             default:
                 return new MySQLUnsupportedCommandExecutor(commandPacketType);
         }

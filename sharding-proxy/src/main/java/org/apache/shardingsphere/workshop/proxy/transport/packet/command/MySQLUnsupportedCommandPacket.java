@@ -15,19 +15,14 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.transport.packet.command.admin.ping;
-
-import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacketType;
+package org.apache.shardingsphere.workshop.proxy.transport.packet.command;
 
 /**
- * COM_PING command packet for MySQL.
- * 
- * @see <a href="https://dev.mysql.com/doc/internals/en/com-ping.html">COM_PING</a>
+ * Unsupported command packet for MySQL.
  */
-public final class MySQLComPingPacket extends MySQLCommandPacket {
+public final class MySQLUnsupportedCommandPacket extends MySQLCommandPacket {
     
-    public MySQLComPingPacket() {
-        super(MySQLCommandPacketType.COM_PING);
+    public MySQLUnsupportedCommandPacket(final MySQLCommandPacketType type) {
+        super(type);
     }
 }

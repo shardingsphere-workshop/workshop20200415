@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query.text;
+package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,6 @@ import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPay
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,14 +40,6 @@ public final class MySQLTextResultSetRowPacket implements MySQLPacket {
     private final int sequenceId;
     
     private final List<Object> data;
-    
-    public MySQLTextResultSetRowPacket(final MySQLPacketPayload payload, final int columnCount) {
-        sequenceId = payload.readInt1();
-        data = new ArrayList<>(columnCount);
-        for (int i = 0; i < columnCount; i++) {
-            data.add(payload.readStringLenenc());
-        }
-    }
     
     @Override
     public void write(final MySQLPacketPayload payload) {

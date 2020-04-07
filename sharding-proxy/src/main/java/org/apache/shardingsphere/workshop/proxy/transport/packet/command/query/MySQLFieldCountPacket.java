@@ -35,10 +35,6 @@ public final class MySQLFieldCountPacket implements MySQLPacket {
     
     private final int columnCount;
     
-    public MySQLFieldCountPacket(final MySQLPacketPayload payload) {
-        this(payload.readInt1(), payload.readInt1());
-    }
-    
     @Override
     public void write(final MySQLPacketPayload payload) {
         payload.writeIntLenenc(columnCount);

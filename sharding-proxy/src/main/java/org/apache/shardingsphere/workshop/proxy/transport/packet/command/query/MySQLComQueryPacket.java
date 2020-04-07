@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query.text.query;
+package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -33,11 +33,6 @@ import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPay
 public final class MySQLComQueryPacket extends MySQLCommandPacket {
     
     private final String sql;
-    
-    public MySQLComQueryPacket(final String sql) {
-        super(MySQLCommandPacketType.COM_QUERY);
-        this.sql = sql;
-    }
     
     public MySQLComQueryPacket(final MySQLPacketPayload payload) {
         super(MySQLCommandPacketType.COM_QUERY);

@@ -19,10 +19,7 @@ package org.apache.shardingsphere.workshop.proxy.transport.packet.command;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.command.admin.MySQLUnsupportedCommandPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.command.admin.ping.MySQLComPingPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.command.admin.quit.MySQLComQuitPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.command.query.text.query.MySQLComQueryPacket;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.command.query.MySQLComQueryPacket;
 import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
 
 import java.sql.SQLException;
@@ -43,12 +40,8 @@ public final class MySQLCommandPacketFactory {
      */
     public static MySQLCommandPacket newInstance(final MySQLCommandPacketType commandPacketType, final MySQLPacketPayload payload) throws SQLException {
         switch (commandPacketType) {
-            case COM_QUIT:
-                return new MySQLComQuitPacket();
             case COM_QUERY:
                 return new MySQLComQueryPacket(payload);
-            case COM_PING:
-                return new MySQLComPingPacket();
             default:
                 return new MySQLUnsupportedCommandPacket(commandPacketType);
         }
