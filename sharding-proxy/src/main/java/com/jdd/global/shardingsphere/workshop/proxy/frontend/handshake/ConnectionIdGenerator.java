@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.frontend.auth;
+package com.jdd.global.shardingsphere.workshop.proxy.frontend.handshake;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

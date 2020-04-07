@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.frontend.auth;
+package com.jdd.global.shardingsphere.workshop.proxy.frontend.handshake;
 
 import com.jdd.global.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 import com.jdd.global.shardingsphere.workshop.proxy.transport.packet.error.MySQLServerErrorCode;

@@ -17,7 +17,7 @@
 
 package com.jdd.global.shardingsphere.workshop.proxy.frontend;
 
-import com.jdd.global.shardingsphere.workshop.proxy.frontend.auth.MySQLAuthenticationEngine;
+import com.jdd.global.shardingsphere.workshop.proxy.frontend.handshake.MySQLAuthenticationEngine;
 import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.ComQueryCommandExecutor;
 import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.CommandExecutor;
 import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.MySQLCommandExecutorFactory;
