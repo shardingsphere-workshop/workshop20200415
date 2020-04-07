@@ -15,42 +15,27 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.transport.packet.generic;
+package org.apache.shardingsphere.workshop.proxy.frontend.command;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
-import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLStatusFlag;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.error.CommonErrorCode;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacketType;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.generic.MySQLErrPacket;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
- * EOF packet protocol for MySQL.
- * 
- * @see <a href="https://dev.mysql.com/doc/internals/en/packet-EOF_Packet.html">EOF Packet</a>
+ * Unsupported command packet executor for MySQL.
  */
 @RequiredArgsConstructor
-@Getter
-public final class MySQLEofPacket implements MySQLPacket {
+public final class MySQLUnsupportedCommandExecutor implements CommandExecutor {
     
-    /**
-     * Header of EOF packet.
-     */
-    public static final int HEADER = 0xfe;
-    
-    private final int sequenceId;
-    
-    private final int warnings;
-    
-    private final int statusFlags;
-    
-    public MySQLEofPacket(final int sequenceId) {
-        this(sequenceId, 0, MySQLStatusFlag.SERVER_STATUS_AUTOCOMMIT.getValue());
-    }
+    private final MySQLCommandPacketType type;
     
     @Override
-    public void write(final MySQLPacketPayload payload) {
-        payload.writeInt1(HEADER);
-        payload.writeInt2(warnings);
-        payload.writeInt2(statusFlags);
+    public Collection<MySQLPacket> execute() {
+        return Collections.singletonList(new MySQLErrPacket(1, CommonErrorCode.UNSUPPORTED_COMMAND, type));
     }
 }

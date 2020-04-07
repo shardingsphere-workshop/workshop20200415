@@ -20,7 +20,7 @@ package org.apache.shardingsphere.workshop.proxy.transport.packet.command;
 import com.google.common.base.Preconditions;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 
 /**
  * Command packet type loader for MySQL.

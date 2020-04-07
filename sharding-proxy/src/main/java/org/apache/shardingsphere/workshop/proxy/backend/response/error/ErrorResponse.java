@@ -15,28 +15,18 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query;
+package org.apache.shardingsphere.workshop.proxy.backend.response.error;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
+import org.apache.shardingsphere.workshop.proxy.backend.response.BackendResponse;
 
 /**
- * COM_QUERY response field count packet for MySQL.
- * 
- * @see <a href="https://dev.mysql.com/doc/internals/en/com-query-response.html">COM_QUERY field count</a>
+ * Error response.
  */
 @RequiredArgsConstructor
 @Getter
-public final class MySQLFieldCountPacket implements MySQLPacket {
+public final class ErrorResponse implements BackendResponse {
     
-    private final int sequenceId;
-    
-    private final int columnCount;
-    
-    @Override
-    public void write(final MySQLPacketPayload payload) {
-        payload.writeIntLenenc(columnCount);
-    }
+    private final Exception cause;
 }

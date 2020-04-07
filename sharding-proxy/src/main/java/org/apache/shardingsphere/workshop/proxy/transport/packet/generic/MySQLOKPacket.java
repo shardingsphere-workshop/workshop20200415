@@ -17,12 +17,11 @@
 
 package org.apache.shardingsphere.workshop.proxy.transport.packet.generic;
 
-import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLStatusFlag;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
 
 /**
  * OK packet protocol for MySQL.
@@ -58,16 +57,6 @@ public final class MySQLOKPacket implements MySQLPacket {
     
     public MySQLOKPacket(final int sequenceId, final long affectedRows, final long lastInsertId) {
         this(sequenceId, affectedRows, lastInsertId, DEFAULT_STATUS_FLAG, 0, "");
-    }
-    
-    public MySQLOKPacket(final MySQLPacketPayload payload) {
-        sequenceId = payload.readInt1();
-        Preconditions.checkArgument(HEADER == payload.readInt1(), "Header of MySQL OK packet must be `0x00`.");
-        affectedRows = payload.readIntLenenc();
-        lastInsertId = payload.readIntLenenc();
-        statusFlag = payload.readInt2();
-        warnings = payload.readInt2();
-        info = payload.readStringEOF();
     }
     
     @Override

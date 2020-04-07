@@ -17,7 +17,7 @@
 
 package org.apache.shardingsphere.workshop.proxy.frontend.command;
 
-import org.apache.shardingsphere.workshop.proxy.transport.packet.DatabasePacket;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
 
 import java.sql.SQLException;
 
@@ -51,8 +51,8 @@ public interface ComQueryCommandExecutor extends CommandExecutor {
     /**
      * Get query data.
      *
-     * @return database packet of query data
+     * @return MySQL packet of query data
      * @throws SQLException SQL exception
      */
-    DatabasePacket getQueryData() throws SQLException;
+    MySQLPacket getQueryData() throws SQLException;
 }

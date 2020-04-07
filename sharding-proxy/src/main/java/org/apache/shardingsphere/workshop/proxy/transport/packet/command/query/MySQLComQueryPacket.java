@@ -21,7 +21,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacket;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacketType;
-import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 
 /**
  * COM_QUERY command packet for MySQL.

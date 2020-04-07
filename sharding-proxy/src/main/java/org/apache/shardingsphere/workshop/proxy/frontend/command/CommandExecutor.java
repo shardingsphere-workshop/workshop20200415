@@ -17,7 +17,7 @@
 
 package org.apache.shardingsphere.workshop.proxy.frontend.command;
 
-import org.apache.shardingsphere.workshop.proxy.transport.packet.DatabasePacket;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -33,5 +33,5 @@ public interface CommandExecutor {
      * @return database packets to be sent
      * @throws SQLException SQL exception
      */
-    Collection<DatabasePacket> execute() throws SQLException;
+    Collection<MySQLPacket> execute() throws SQLException;
 }

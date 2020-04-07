@@ -23,7 +23,7 @@ import lombok.Setter;
 import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLAuthenticationMethod;
 import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLCapabilityFlag;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 
 /**
  * Handshake response above MySQL 4.1 packet protocol.

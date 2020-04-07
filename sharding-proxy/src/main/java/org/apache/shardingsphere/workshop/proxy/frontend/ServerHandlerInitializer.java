@@ -15,28 +15,28 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query;
+package org.apache.shardingsphere.workshop.proxy.frontend;
 
-import lombok.Getter;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
 import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketCodec;
+
+import java.util.concurrent.ExecutorService;
 
 /**
- * COM_QUERY response field count packet for MySQL.
- * 
- * @see <a href="https://dev.mysql.com/doc/internals/en/com-query-response.html">COM_QUERY field count</a>
+ * Channel initializer.
  */
 @RequiredArgsConstructor
-@Getter
-public final class MySQLFieldCountPacket implements MySQLPacket {
+public final class ServerHandlerInitializer extends ChannelInitializer<SocketChannel> {
     
-    private final int sequenceId;
-    
-    private final int columnCount;
+    private final ExecutorService executorService;
     
     @Override
-    public void write(final MySQLPacketPayload payload) {
-        payload.writeIntLenenc(columnCount);
+    protected void initChannel(final SocketChannel socketChannel) {
+        ChannelPipeline pipeline = socketChannel.pipeline();
+        pipeline.addLast(new MySQLPacketCodec());
+        pipeline.addLast(new FrontendChannelInboundHandler(executorService));
     }
 }

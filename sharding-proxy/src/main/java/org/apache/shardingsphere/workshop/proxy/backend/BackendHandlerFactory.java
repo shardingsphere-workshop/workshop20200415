@@ -15,39 +15,35 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy;
+package org.apache.shardingsphere.workshop.proxy.backend;
 
-import com.google.common.primitives.Ints;
+import com.google.common.base.Strings;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.backend.schema.CSVLogicSchema;
-import org.apache.shardingsphere.workshop.proxy.frontend.ShardingProxy;
-
-import java.io.IOException;
+import org.apache.shardingsphere.sql.parser.SQLParserEngine;
+import org.apache.shardingsphere.sql.parser.sql.statement.SQLStatement;
+import org.apache.shardingsphere.sql.parser.sql.statement.dml.SelectStatement;
 
 /**
- * Sharding-Proxy Bootstrap.
+ * Backend handler factory.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class Bootstrap {
+public final class BackendHandlerFactory {
     
-    private static final int DEFAULT_PORT = 3307;
-
     /**
-     * Main entrance.
+     * Create new instance of text protocol backend handler.
      *
-     * @param args startup arguments
+     * @param sql SQL to be executed
+     * @return instance of text protocol backend handler
      */
-    public static void main(final String[] args) throws IOException {
-        CSVLogicSchema.getInstance().init();
-        ShardingProxy.getInstance().start(getPort(args));
-    }
-    
-    private static int getPort(final String[] args) {
-        if (0 == args.length) {
-            return DEFAULT_PORT;
+    public static BackendHandler newInstance(final String sql) {
+        if (Strings.isNullOrEmpty(sql)) {
+            return new SkipBackendHandler();
         }
-        Integer paredPort = Ints.tryParse(args[0]);
-        return paredPort == null ? DEFAULT_PORT : paredPort;
+        SQLStatement sqlStatement = new SQLParserEngine("MySQL").parse(sql, false);
+        if (sqlStatement instanceof SelectStatement) {
+            return new CSVQueryBackendHandler((SelectStatement) sqlStatement);
+        }
+        return new SkipBackendHandler();
     }
 }

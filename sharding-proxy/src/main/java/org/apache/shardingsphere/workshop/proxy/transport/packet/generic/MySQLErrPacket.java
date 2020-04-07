@@ -19,9 +19,9 @@ package org.apache.shardingsphere.workshop.proxy.transport.packet.generic;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.error.SQLErrorCode;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.error.CommonErrorCode;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 
 /**
  * ERR packet protocol for MySQL.
@@ -47,7 +47,7 @@ public final class MySQLErrPacket implements MySQLPacket {
     
     private final String errorMessage;
     
-    public MySQLErrPacket(final int sequenceId, final SQLErrorCode sqlErrorCode, final Object... errorMessageArguments) {
+    public MySQLErrPacket(final int sequenceId, final CommonErrorCode sqlErrorCode, final Object... errorMessageArguments) {
         this(sequenceId, sqlErrorCode.getErrorCode(), sqlErrorCode.getSqlState(), String.format(sqlErrorCode.getErrorMessage(), errorMessageArguments));
     }
     

@@ -15,28 +15,39 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query;
+package org.apache.shardingsphere.workshop.proxy.frontend.auth;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
- * COM_QUERY response field count packet for MySQL.
- * 
- * @see <a href="https://dev.mysql.com/doc/internals/en/com-query-response.html">COM_QUERY field count</a>
+ * Connection ID generator.
  */
-@RequiredArgsConstructor
-@Getter
-public final class MySQLFieldCountPacket implements MySQLPacket {
+@NoArgsConstructor(access = AccessLevel.NONE)
+public final class ConnectionIdGenerator {
     
-    private final int sequenceId;
+    private static final ConnectionIdGenerator INSTANCE = new ConnectionIdGenerator();
     
-    private final int columnCount;
+    private int currentId;
     
-    @Override
-    public void write(final MySQLPacketPayload payload) {
-        payload.writeIntLenenc(columnCount);
+    /**
+     * Get instance.
+     * 
+     * @return instance
+     */
+    public static ConnectionIdGenerator getInstance() {
+        return INSTANCE;
+    } 
+    
+    /**
+     * Get next connection ID.
+     * 
+     * @return next connection ID
+     */
+    public synchronized int nextId() {
+        if (currentId >= Integer.MAX_VALUE) {
+            currentId = 0;
+        }
+        return ++currentId;
     }
 }

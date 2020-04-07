@@ -15,28 +15,35 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query;
+package org.apache.shardingsphere.workshop.proxy.transport.packet.error;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 
 /**
- * COM_QUERY response field count packet for MySQL.
- * 
- * @see <a href="https://dev.mysql.com/doc/internals/en/com-query-response.html">COM_QUERY field count</a>
+ * Common error code.
  */
 @RequiredArgsConstructor
 @Getter
-public final class MySQLFieldCountPacket implements MySQLPacket {
+public enum CommonErrorCode {
     
-    private final int sequenceId;
+    CIRCUIT_BREAK_MODE(10000, "C10000", "Circuit break mode is ON."),
     
-    private final int columnCount;
+    UNSUPPORTED_COMMAND(10001, "C10001", "Unsupported command: [%s]"),
     
-    @Override
-    public void write(final MySQLPacketPayload payload) {
-        payload.writeIntLenenc(columnCount);
-    }
+    UNKNOWN_EXCEPTION(10002, "C10002", "Unknown exception: [%s]"),
+    
+    ER_DBACCESS_DENIED_ERROR(1044, "42000", "Access denied for user '%s'@'%s' to database '%s'"),
+    
+    ER_ACCESS_DENIED_ERROR(1045, "28000", "Access denied for user '%s'@'%s' (using password: %s)"),
+    
+    ER_BAD_DB_ERROR(1049, "42000", "Unknown database '%s'"),
+    
+    ER_INTERNAL_ERROR(1815, "HY000", "Internal error: %s");
+    
+    private final int errorCode;
+    
+    private final String sqlState;
+    
+    private final String errorMessage;
 }

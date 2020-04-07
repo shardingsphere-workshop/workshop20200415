@@ -19,7 +19,6 @@ package org.apache.shardingsphere.workshop.proxy.transport.packet.command;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.CommandPacketType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +28,7 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Getter
-public enum MySQLCommandPacketType implements CommandPacketType {
+public enum MySQLCommandPacketType {
     
     /**
      * COM_SLEEP.

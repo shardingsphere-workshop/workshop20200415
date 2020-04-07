@@ -15,30 +15,39 @@
  * limitations under the License.
  */
 
-package org.apache.shardingsphere.workshop.proxy.transport.packet;
+package org.apache.shardingsphere.workshop.proxy.backend;
 
-import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
+import org.apache.shardingsphere.workshop.proxy.backend.response.BackendResponse;
+import org.apache.shardingsphere.workshop.proxy.backend.response.query.QueryData;
+
+import java.sql.SQLException;
 
 /**
- * Database packet for MySQL.
+ * Text protocol backend handler.
  */
-public interface MySQLPacket {
-    
-    int PAYLOAD_LENGTH = 3;
-    
-    int SEQUENCE_LENGTH = 1;
+public interface BackendHandler {
     
     /**
-     * Get sequence ID.
+     * Execute command.
      *
-     * @return sequence ID
+     * @return backend response
+     * @throws SQLException SQL exception
      */
-    int getSequenceId();
+    BackendResponse execute() throws SQLException;
     
     /**
-     * Write packet to byte buffer.
+     * Goto next result value.
      *
-     * @param payload packet payload to be written
+     * @return has more result value or not
+     * @throws SQLException SQL exception
      */
-    void write(MySQLPacketPayload payload);
+    boolean next() throws SQLException;
+    
+    /**
+     * Get query data.
+     *
+     * @return query data
+     * @throws SQLException SQL exception
+     */
+    QueryData getQueryData() throws SQLException;
 }

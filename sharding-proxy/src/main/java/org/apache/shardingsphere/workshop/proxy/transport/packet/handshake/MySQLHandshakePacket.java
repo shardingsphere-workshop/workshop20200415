@@ -17,14 +17,12 @@
 
 package org.apache.shardingsphere.workshop.proxy.transport.packet.handshake;
 
-import com.google.common.base.Preconditions;
 import lombok.Getter;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLCapabilityFlag;
 import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLServerInfo;
 import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLStatusFlag;
-import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLAuthenticationMethod;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
 
 /**
  * Handshake packet protocol for MySQL.
@@ -61,49 +59,6 @@ public final class MySQLHandshakePacket implements MySQLPacket {
         this.capabilityFlagsUpper = MySQLCapabilityFlag.calculateHandshakeCapabilityFlagsUpper();
         this.authPluginData = authPluginData;
         this.authPluginName = null;
-    }
-    
-    public MySQLHandshakePacket(final MySQLPacketPayload payload) {
-        Preconditions.checkArgument(0 == payload.readInt1(), "Sequence ID of MySQL handshake packet must be `0`.");
-        Preconditions.checkArgument(protocolVersion == payload.readInt1());
-        serverVersion = payload.readStringNul();
-        connectionId = payload.readInt4();
-        final byte[] authPluginDataPart1 = payload.readStringNulByBytes();
-        capabilityFlagsLower = payload.readInt2();
-        characterSet = payload.readInt1();
-        statusFlag = MySQLStatusFlag.valueOf(payload.readInt2());
-        capabilityFlagsUpper = payload.readInt2();
-        payload.readInt1();
-        payload.skipReserved(10);
-        authPluginData = new MySQLAuthPluginData(authPluginDataPart1, readAuthPluginDataPart2(payload));
-        authPluginName = readAuthPluginName(payload);
-    }
-    
-    /**
-     * There are some different between implement of handshake initialization packet and document.
-     * In source code of 5.7 version, authPluginDataPart2 should be at least 12 bytes,
-     * and then follow a nul byte.
-     * But in document, authPluginDataPart2 is at least 13 bytes, and not nul byte.
-     * From test, the 13th byte is nul byte and should be excluded from authPluginDataPart2.
-     *
-     * @param payload MySQL packet payload
-     */
-    private byte[] readAuthPluginDataPart2(final MySQLPacketPayload payload) {
-        return isClientSecureConnection() ? payload.readStringNulByBytes() : new byte[0];
-    }
-    
-    private String readAuthPluginName(final MySQLPacketPayload payload) {
-        return isClientPluginAuth() ? payload.readStringNul() : null;
-    }
-    
-    /**
-     * Set auth plugin name.
-     *
-     * @param mySQLAuthenticationMethod MySQL authentication method
-     */
-    public void setAuthPluginName(final MySQLAuthenticationMethod mySQLAuthenticationMethod) {
-        this.authPluginName = mySQLAuthenticationMethod.getMethodName();
-        capabilityFlagsUpper |= MySQLCapabilityFlag.CLIENT_PLUGIN_AUTH.getValue() >> 16;
     }
     
     @Override

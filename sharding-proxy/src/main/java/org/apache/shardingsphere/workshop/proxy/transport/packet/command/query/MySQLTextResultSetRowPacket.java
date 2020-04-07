@@ -20,7 +20,7 @@ package org.apache.shardingsphere.workshop.proxy.transport.packet.command.query;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

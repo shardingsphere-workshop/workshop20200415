@@ -18,15 +18,14 @@
 package org.apache.shardingsphere.workshop.proxy.transport.packet.command;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.CommandPacket;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
 
 /**
  * Command packet for MySQL.
  */
 @RequiredArgsConstructor
-public abstract class MySQLCommandPacket implements MySQLPacket, CommandPacket {
+public abstract class MySQLCommandPacket implements MySQLPacket {
     
     private final MySQLCommandPacketType type;
     

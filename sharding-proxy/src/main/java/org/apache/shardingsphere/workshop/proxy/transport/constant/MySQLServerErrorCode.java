@@ -19,7 +19,6 @@ package org.apache.shardingsphere.workshop.proxy.transport.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.shardingsphere.workshop.proxy.transport.error.SQLErrorCode;
 
 /**
  * Server error code for MySQL.
@@ -28,7 +27,7 @@ import org.apache.shardingsphere.workshop.proxy.transport.error.SQLErrorCode;
  */
 @RequiredArgsConstructor
 @Getter
-public enum MySQLServerErrorCode implements SQLErrorCode {
+public enum MySQLServerErrorCode {
 
     ER_DBACCESS_DENIED_ERROR(1044, "42000", "Access denied for user '%s'@'%s' to database '%s'"),
 

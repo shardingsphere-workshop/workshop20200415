@@ -30,7 +30,6 @@ import io.netty.handler.logging.LoggingHandler;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
-import org.apache.shardingsphere.workshop.proxy.frontend.netty.ServerHandlerInitializer;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

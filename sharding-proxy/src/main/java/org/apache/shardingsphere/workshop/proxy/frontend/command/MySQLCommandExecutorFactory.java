@@ -20,11 +20,10 @@ package org.apache.shardingsphere.workshop.proxy.frontend.command;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shardingsphere.workshop.proxy.frontend.command.comquery.MySQLComQueryPacketExecutor;
-import org.apache.shardingsphere.workshop.proxy.frontend.command.generic.MySQLUnsupportedCommandExecutor;
-import org.apache.shardingsphere.workshop.proxy.transport.packet.CommandPacket;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacketType;
+import org.apache.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacketTypeLoader;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.command.query.MySQLComQueryPacket;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 
 /**
  * Command executor factory for MySQL.
@@ -36,17 +35,16 @@ public final class MySQLCommandExecutorFactory {
     /**
      * Create new instance of packet executor.
      *
-     * @param commandPacketType command packet type for MySQL
-     * @param commandPacket command packet for MySQL
+     * @param payload command packet for MySQL
      * @return command executor
      */
-    public static CommandExecutor newInstance(final MySQLCommandPacketType commandPacketType, final CommandPacket commandPacket) {
-        log.debug("Execute packet type: {}, value: {}", commandPacketType, commandPacket);
-        switch (commandPacketType) {
+    public static CommandExecutor newInstance(final MySQLPacketPayload payload) {
+        MySQLCommandPacketType packetType = MySQLCommandPacketTypeLoader.getCommandPacketType(payload);
+        switch (packetType) {
             case COM_QUERY:
-                return new MySQLComQueryPacketExecutor((MySQLComQueryPacket) commandPacket);
+                return new MySQLComQueryPacketExecutor(new MySQLComQueryPacket(payload));
             default:
-                return new MySQLUnsupportedCommandExecutor(commandPacketType);
+                return new MySQLUnsupportedCommandExecutor(packetType);
         }
     }
 }

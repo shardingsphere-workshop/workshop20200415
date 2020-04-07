@@ -22,7 +22,7 @@ import lombok.Getter;
 import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLColumnType;
 import org.apache.shardingsphere.workshop.proxy.transport.constant.MySQLServerInfo;
 import org.apache.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
-import org.apache.shardingsphere.workshop.proxy.transport.payload.MySQLPacketPayload;
+import org.apache.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
