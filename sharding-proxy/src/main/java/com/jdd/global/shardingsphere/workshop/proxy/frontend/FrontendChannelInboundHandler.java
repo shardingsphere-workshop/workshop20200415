@@ -5,10 +5,10 @@
 
 package com.jdd.global.shardingsphere.workshop.proxy.frontend;
 
-import com.jdd.global.shardingsphere.workshop.proxy.frontend.handshake.MySQLAuthenticationEngine;
 import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.ComQueryCommandExecutor;
 import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.CommandExecutor;
 import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.MySQLCommandExecutorFactory;
+import com.jdd.global.shardingsphere.workshop.proxy.frontend.auth.MySQLAuthenticationHandler;
 import com.jdd.global.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 import com.jdd.global.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.transport.packet.error.MySQLErrPacketFactory;
@@ -30,15 +30,16 @@ import java.util.concurrent.ExecutorService;
 @Slf4j
 public final class FrontendChannelInboundHandler extends ChannelInboundHandlerAdapter {
     
-    private final ExecutorService executorService;
-    
-    private final MySQLAuthenticationEngine authEngine = new MySQLAuthenticationEngine();
+    private final MySQLAuthenticationHandler authHandler = new MySQLAuthenticationHandler();
     
     private boolean authorized;
     
+    private final ExecutorService executorService;
+    
+    
     @Override
     public void channelActive(final ChannelHandlerContext context) {
-        authEngine.handshake(context);
+        authHandler.handshake(context);
     }
     
     @Override
@@ -50,21 +51,19 @@ public final class FrontendChannelInboundHandler extends ChannelInboundHandlerAd
         executorService.execute(new CommandExecutorTask(context, message));
     }
     
+    @Override
+    public void channelInactive(final ChannelHandlerContext context) {
+        context.fireChannelInactive();
+    }
+    
     private boolean auth(final ChannelHandlerContext context, final ByteBuf message) {
         try (MySQLPacketPayload payload = new MySQLPacketPayload(message)) {
-            return authEngine.auth(context, payload);
-            // CHECKSTYLE:OFF
+            return authHandler.auth(context, payload);
         } catch (final Exception ex) {
-            // CHECKSTYLE:ON
             log.error("Exception occur: ", ex);
             context.write(MySQLErrPacketFactory.newInstance(1, ex));
         }
         return false;
-    }
-    
-    @Override
-    public void channelInactive(final ChannelHandlerContext context) {
-        context.fireChannelInactive();
     }
     
     @RequiredArgsConstructor
@@ -78,9 +77,7 @@ public final class FrontendChannelInboundHandler extends ChannelInboundHandlerAd
         public void run() {
             try (MySQLPacketPayload payload = new MySQLPacketPayload((ByteBuf) message)) {
                 executeCommand(context, payload);
-                // CHECKSTYLE:OFF
             } catch (final Exception ex) {
-                // CHECKSTYLE:ON
                 log.error("Exception occur: ", ex);
                 context.writeAndFlush(MySQLErrPacketFactory.newInstance(1, ex));
             }
