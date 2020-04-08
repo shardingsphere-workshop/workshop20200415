@@ -3,11 +3,9 @@
  * All rights reserved.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.packet.generic;
+package com.jdd.global.shardingsphere.workshop.proxy.packet;
 
-import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
-import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLStatusFlag;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLStatusFlag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

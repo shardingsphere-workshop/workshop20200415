@@ -13,8 +13,8 @@ import com.jdd.global.shardingsphere.workshop.proxy.handler.query.QueryBackendHa
 import com.jdd.global.shardingsphere.workshop.proxy.handler.DefaultBackendHandler;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.error.MySQLErrPacketFactory;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.generic.MySQLEofPacket;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLErrPacketFactory;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLEofPacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

@@ -7,8 +7,8 @@ package com.jdd.global.shardingsphere.workshop.proxy.packet.query;
 
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
-import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLColumnType;
-import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLServerInfo;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLColumnType;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLServerInfo;
 import lombok.Getter;
 
 /**

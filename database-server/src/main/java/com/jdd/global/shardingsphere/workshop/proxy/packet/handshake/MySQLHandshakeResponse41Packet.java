@@ -6,7 +6,7 @@
 package com.jdd.global.shardingsphere.workshop.proxy.packet.handshake;
 
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
-import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLCapabilityFlag;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLCapabilityFlag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

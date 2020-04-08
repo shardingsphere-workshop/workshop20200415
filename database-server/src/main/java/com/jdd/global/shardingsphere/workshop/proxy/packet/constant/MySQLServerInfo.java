@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.constant;
+package com.jdd.global.shardingsphere.workshop.proxy.packet.constant;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -11,8 +11,8 @@ import com.jdd.global.shardingsphere.workshop.proxy.packet.query.MySQLColumnDefi
 import com.jdd.global.shardingsphere.workshop.proxy.packet.query.MySQLColumnFieldDetailFlag;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.query.MySQLFieldCountPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.query.MySQLTextResultSetRowPacket;
-import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLColumnType;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.generic.MySQLEofPacket;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLColumnType;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLEofPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.CSVLogicSchema;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
