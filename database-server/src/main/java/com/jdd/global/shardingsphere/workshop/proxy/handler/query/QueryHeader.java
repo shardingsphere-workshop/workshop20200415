@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.response.query;
+package com.jdd.global.shardingsphere.workshop.proxy.handler.query;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

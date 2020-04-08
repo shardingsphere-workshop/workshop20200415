@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.schema;
+package com.jdd.global.shardingsphere.workshop.proxy;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Preconditions;

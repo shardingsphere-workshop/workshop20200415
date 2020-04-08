@@ -3,30 +3,18 @@
  * All rights reserved.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.command;
+package com.jdd.global.shardingsphere.workshop.proxy.handler.query;
 
+import com.jdd.global.shardingsphere.workshop.proxy.handler.BackendHandler;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
- * Query command executor.
+ * Text protocol backend handler.
  */
-public interface ComQueryCommandExecutor extends CommandExecutor {
-    
-    /**
-     * Judge is error response.
-     *
-     * @return is error response or not
-     */
-    boolean isErrorResponse();
-    
-    /**
-     * Judge is query SQL or not.
-     *
-     * @return is query SQL or not
-     */
-    boolean isQuery();
+public interface QueryBackendHandler extends BackendHandler {
     
     /**
      * Goto next result value.
@@ -39,7 +27,7 @@ public interface ComQueryCommandExecutor extends CommandExecutor {
     /**
      * Get query data.
      *
-     * @return MySQL packet of query data
+     * @return query data
      * @throws SQLException SQL exception
      */
     MySQLPacket getQueryData() throws SQLException;

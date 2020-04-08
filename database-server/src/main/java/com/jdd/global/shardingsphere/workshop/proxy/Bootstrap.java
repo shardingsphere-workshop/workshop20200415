@@ -6,7 +6,6 @@
 package com.jdd.global.shardingsphere.workshop.proxy;
 
 import com.google.common.primitives.Ints;
-import com.jdd.global.shardingsphere.workshop.proxy.schema.CSVLogicSchema;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

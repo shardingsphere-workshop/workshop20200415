@@ -5,8 +5,6 @@
 
 package com.jdd.global.shardingsphere.workshop.proxy.packet;
 
-import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
-
 /**
  * Database packet for MySQL.
  */
