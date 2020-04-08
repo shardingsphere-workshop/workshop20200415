@@ -7,14 +7,14 @@ package com.jdd.global.shardingsphere.workshop.proxy;
 
 import com.google.common.primitives.Ints;
 import com.jdd.global.shardingsphere.workshop.proxy.backend.schema.CSVLogicSchema;
-import com.jdd.global.shardingsphere.workshop.proxy.frontend.ShardingProxy;
+import com.jdd.global.shardingsphere.workshop.proxy.frontend.DatabaseServer;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
 /**
- * Sharding-Proxy Bootstrap.
+ * Database-server Bootstrap.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Bootstrap {
@@ -28,7 +28,7 @@ public final class Bootstrap {
      */
     public static void main(final String[] args) throws IOException {
         CSVLogicSchema.getInstance().init();
-        ShardingProxy.getInstance().start(getPort(args));
+        DatabaseServer.getInstance().start(getPort(args));
     }
     
     private static int getPort(final String[] args) {

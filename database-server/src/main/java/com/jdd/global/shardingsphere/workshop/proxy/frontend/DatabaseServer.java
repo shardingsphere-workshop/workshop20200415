@@ -23,12 +23,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Sharding-Proxy.
+ * Database-server.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ShardingProxy {
+public final class DatabaseServer {
     
-    private static final ShardingProxy INSTANCE = new ShardingProxy();
+    private static final DatabaseServer INSTANCE = new DatabaseServer();
     
     private EventLoopGroup bossGroup;
     
@@ -41,7 +41,7 @@ public final class ShardingProxy {
      *
      * @return instance of proxy context.
      */
-    public static ShardingProxy getInstance() {
+    public static DatabaseServer getInstance() {
         return INSTANCE;
     }
     
