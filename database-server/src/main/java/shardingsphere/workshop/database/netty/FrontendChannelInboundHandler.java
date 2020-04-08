@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2020 ShardingSphere.
- * All rights reserved.
- */
 
 package shardingsphere.workshop.database.netty;
 
