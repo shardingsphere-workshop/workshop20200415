@@ -7,7 +7,7 @@ package com.jdd.global.shardingsphere.workshop.proxy.packet.generic;
 
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.error.MySQLServerErrorCode;
+import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLServerErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

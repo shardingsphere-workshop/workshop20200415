@@ -8,7 +8,7 @@ package com.jdd.global.shardingsphere.workshop.proxy.handler;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.error.MySQLServerErrorCode;
+import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLServerErrorCode;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.generic.MySQLErrPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.generic.MySQLOKPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.handshake.MySQLAuthPluginData;

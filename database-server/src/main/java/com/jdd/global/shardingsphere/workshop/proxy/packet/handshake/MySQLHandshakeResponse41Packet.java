@@ -6,9 +6,7 @@
 package com.jdd.global.shardingsphere.workshop.proxy.packet.handshake;
 
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLAuthenticationMethod;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLCapabilityFlag;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
+import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLCapabilityFlag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,7 +19,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Setter
 @Getter
-public final class MySQLHandshakeResponse41Packet implements MySQLPacket {
+public final class MySQLHandshakeResponse41Packet {
     
     private final int sequenceId;
     
@@ -69,60 +67,5 @@ public final class MySQLHandshakeResponse41Packet implements MySQLPacket {
     private String readAuthPluginName(final MySQLPacketPayload payload) {
         // TODO Should check CLIENT_PLUGIN_AUTH both client capabilityFlags and server capability
         return null;
-    }
-    
-    /**
-     * Set database.
-     *
-     * @param database database
-     */
-    public void setDatabase(final String database) {
-        this.database = database;
-        capabilityFlags |= MySQLCapabilityFlag.CLIENT_CONNECT_WITH_DB.getValue();
-    }
-    
-    /**
-     * Set auth plugin name.
-     *
-     * @param mySQLAuthenticationMethod MySQL authentication method
-     */
-    public void setAuthPluginName(final MySQLAuthenticationMethod mySQLAuthenticationMethod) {
-        this.authPluginName = mySQLAuthenticationMethod.getMethodName();
-        capabilityFlags |= MySQLCapabilityFlag.CLIENT_PLUGIN_AUTH.getValue();
-    }
-    
-    @Override
-    public void write(final MySQLPacketPayload payload) {
-        payload.writeInt4(capabilityFlags);
-        payload.writeInt4(maxPacketSize);
-        payload.writeInt1(characterSet);
-        payload.writeReserved(23);
-        payload.writeStringNul(username);
-        writeAuthResponse(payload);
-        writeDatabase(payload);
-        writeAuthPluginName(payload);
-    }
-    
-    private void writeAuthResponse(final MySQLPacketPayload payload) {
-        if (0 != (capabilityFlags & MySQLCapabilityFlag.CLIENT_PLUGIN_AUTH_LENENC_CLIENT_DATA.getValue())) {
-            payload.writeStringLenenc(new String(authResponse));
-        } else if (0 != (capabilityFlags & MySQLCapabilityFlag.CLIENT_SECURE_CONNECTION.getValue())) {
-            payload.writeInt1(authResponse.length);
-            payload.writeBytes(authResponse);
-        } else {
-            payload.writeStringNul(new String(authResponse));
-        }
-    }
-    
-    private void writeDatabase(final MySQLPacketPayload payload) {
-        if (0 != (capabilityFlags & MySQLCapabilityFlag.CLIENT_CONNECT_WITH_DB.getValue())) {
-            payload.writeStringNul(database);
-        }
-    }
-    
-    private void writeAuthPluginName(final MySQLPacketPayload payload) {
-        if (0 != (capabilityFlags & MySQLCapabilityFlag.CLIENT_PLUGIN_AUTH.getValue())) {
-            payload.writeStringNul(authPluginName);
-        }
     }
 }

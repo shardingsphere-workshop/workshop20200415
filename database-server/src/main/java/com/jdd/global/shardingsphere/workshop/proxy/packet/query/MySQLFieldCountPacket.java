@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.packet.command.query;
+package com.jdd.global.shardingsphere.workshop.proxy.packet.query;
 
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;

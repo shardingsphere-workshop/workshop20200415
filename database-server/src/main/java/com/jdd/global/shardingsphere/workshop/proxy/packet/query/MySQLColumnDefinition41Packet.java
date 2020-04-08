@@ -3,17 +3,13 @@
  * All rights reserved.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.packet.command.query;
+package com.jdd.global.shardingsphere.workshop.proxy.packet.query;
 
-import com.google.common.base.Preconditions;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLColumnType;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLServerInfo;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
+import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLColumnType;
+import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLServerInfo;
 import lombok.Getter;
-
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 
 /**
  * Column definition above MySQL 4.1 packet protocol.
@@ -50,22 +46,6 @@ public final class MySQLColumnDefinition41Packet implements MySQLPacket {
     
     private final int decimals;
     
-    public MySQLColumnDefinition41Packet(final int sequenceId, final ResultSetMetaData resultSetMetaData, final int columnIndex) throws SQLException {
-        this(sequenceId, resultSetMetaData.getSchemaName(columnIndex), resultSetMetaData.getTableName(columnIndex), resultSetMetaData.getTableName(columnIndex), 
-                resultSetMetaData.getColumnLabel(columnIndex), resultSetMetaData.getColumnName(columnIndex), resultSetMetaData.getColumnDisplaySize(columnIndex), 
-                MySQLColumnType.valueOfJDBCType(resultSetMetaData.getColumnType(columnIndex)), resultSetMetaData.getScale(columnIndex));
-    }
-    
-    /**
-     * Field description of column definition Packet.
-     *
-     * @see <a href="https://github.com/apache/incubator-shardingsphere/issues/4358"></a>
-     */
-    public MySQLColumnDefinition41Packet(final int sequenceId, final String schema, final String table, final String orgTable,
-                                         final String name, final String orgName, final int columnLength, final MySQLColumnType columnType, final int decimals) {
-        this(sequenceId, 0, schema, table, orgTable, name, orgName, columnLength, columnType, decimals);
-    }
-    
     public MySQLColumnDefinition41Packet(final int sequenceId, final int flags, final String schema, final String table, final String orgTable,
                                          final String name, final String orgName, final int columnLength, final MySQLColumnType columnType, final int decimals) {
         this.sequenceId = sequenceId;
@@ -79,23 +59,6 @@ public final class MySQLColumnDefinition41Packet implements MySQLPacket {
         this.columnLength = columnLength;
         this.columnType = columnType;
         this.decimals = decimals;
-    }
-    
-    public MySQLColumnDefinition41Packet(final MySQLPacketPayload payload) {
-        sequenceId = payload.readInt1();
-        Preconditions.checkArgument(CATALOG.equals(payload.readStringLenenc()));
-        schema = payload.readStringLenenc();
-        table = payload.readStringLenenc();
-        orgTable = payload.readStringLenenc();
-        name = payload.readStringLenenc();
-        orgName = payload.readStringLenenc();
-        Preconditions.checkArgument(NEXT_LENGTH == payload.readIntLenenc());
-        characterSet = payload.readInt2();
-        columnLength = payload.readInt4();
-        columnType = MySQLColumnType.valueOf(payload.readInt1());
-        flags = payload.readInt2();
-        decimals = payload.readInt1();
-        payload.skipReserved(2);
     }
     
     @Override

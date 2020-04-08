@@ -7,11 +7,11 @@ package com.jdd.global.shardingsphere.workshop.proxy.handler.query;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.command.query.MySQLColumnDefinition41Packet;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.command.query.MySQLColumnFieldDetailFlag;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.command.query.MySQLFieldCountPacket;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.command.query.MySQLTextResultSetRowPacket;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.constant.MySQLColumnType;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.query.MySQLColumnDefinition41Packet;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.query.MySQLColumnFieldDetailFlag;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.query.MySQLFieldCountPacket;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.query.MySQLTextResultSetRowPacket;
+import com.jdd.global.shardingsphere.workshop.proxy.constant.MySQLColumnType;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.generic.MySQLEofPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.CSVLogicSchema;
 import lombok.RequiredArgsConstructor;

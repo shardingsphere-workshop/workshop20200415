@@ -9,6 +9,8 @@ import com.google.common.primitives.Bytes;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Random;
+
 /**
  * Auth plugin data for MySQL.
  * 
@@ -21,12 +23,28 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public final class MySQLAuthPluginData {
     
+    private static final byte[] SEED = {
+        'a', 'b', 'e', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', };
+    
+    private final Random random = new Random();
+    
     private final byte[] authPluginDataPart1;
     
     private final byte[] authPluginDataPart2;
     
     public MySQLAuthPluginData() {
-        this(MySQLRandomGenerator.getInstance().generateRandomBytes(8), MySQLRandomGenerator.getInstance().generateRandomBytes(12));
+        authPluginDataPart1 = generateRandomBytes(8);
+        authPluginDataPart2 = generateRandomBytes(12);
+    }
+    
+    private byte[] generateRandomBytes(final int length) {
+        byte[] result = new byte[length];
+        for (int i = 0; i < length; i++) {
+            result[i] = SEED[random.nextInt(SEED.length)];
+        }
+        return result;
     }
     
     /**

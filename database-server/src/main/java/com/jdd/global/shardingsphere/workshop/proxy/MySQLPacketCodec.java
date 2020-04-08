@@ -3,8 +3,10 @@
  * All rights reserved.
  */
 
-package com.jdd.global.shardingsphere.workshop.proxy.packet;
+package com.jdd.global.shardingsphere.workshop.proxy;
 
+import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
+import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;

@@ -13,7 +13,6 @@ import com.jdd.global.shardingsphere.workshop.proxy.handler.query.QueryBackendHa
 import com.jdd.global.shardingsphere.workshop.proxy.handler.DefaultBackendHandler;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.MySQLPacketPayload;
-import com.jdd.global.shardingsphere.workshop.proxy.packet.command.query.MySQLComQueryPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.error.MySQLErrPacketFactory;
 import com.jdd.global.shardingsphere.workshop.proxy.packet.generic.MySQLEofPacket;
 import io.netty.buffer.ByteBuf;
@@ -75,8 +74,8 @@ public final class FrontendChannelInboundHandler extends ChannelInboundHandlerAd
     
     private void executeCommand(final ChannelHandlerContext context, final MySQLPacketPayload payload) throws SQLException {
         Preconditions.checkArgument(0 == payload.readInt1(), "Sequence ID of MySQL command packet must be `0`.");
-        payload.readInt1();
-        SQLStatement sqlStatement = new SQLParserEngine("MySQL").parse(new MySQLComQueryPacket(payload).getSql(), false);
+        Preconditions.checkState(0x03 == payload.readInt1(), "only support COM_QUERY command type");
+        SQLStatement sqlStatement = new SQLParserEngine("MySQL").parse(payload.readStringEOF(), false);
         BackendHandler backendHandler = sqlStatement instanceof SelectStatement ? new CSVQueryBackendHandler((SelectStatement) sqlStatement) : new DefaultBackendHandler();
         Collection<MySQLPacket> responsePackets = backendHandler.execute();
         for (MySQLPacket each : responsePackets) {
