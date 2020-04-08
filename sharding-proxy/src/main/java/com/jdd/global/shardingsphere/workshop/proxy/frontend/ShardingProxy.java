@@ -65,7 +65,7 @@ public final class ShardingProxy {
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
                 .childOption(ChannelOption.TCP_NODELAY, true)
                 .handler(new LoggingHandler(LogLevel.INFO))
-                .childHandler(new ServerHandlerInitializer(userExecutorService));
+                .childHandler(new ServerHandlerInitializer());
             ChannelFuture future = bootstrap.bind(port).sync();
             future.channel().closeFuture().sync();
         } finally {

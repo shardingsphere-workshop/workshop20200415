@@ -19,12 +19,10 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public final class ServerHandlerInitializer extends ChannelInitializer<SocketChannel> {
     
-    private final ExecutorService executorService;
-    
     @Override
     protected void initChannel(final SocketChannel socketChannel) {
         ChannelPipeline pipeline = socketChannel.pipeline();
         pipeline.addLast(new MySQLPacketCodec());
-        pipeline.addLast(new FrontendChannelInboundHandler(executorService));
+        pipeline.addLast(new FrontendChannelInboundHandler());
     }
 }

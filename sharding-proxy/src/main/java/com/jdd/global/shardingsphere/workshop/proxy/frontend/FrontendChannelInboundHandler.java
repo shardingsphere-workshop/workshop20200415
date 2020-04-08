@@ -5,12 +5,16 @@
 
 package com.jdd.global.shardingsphere.workshop.proxy.frontend;
 
+import com.google.common.base.Preconditions;
 import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.ComQueryCommandExecutor;
 import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.CommandExecutor;
-import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.MySQLCommandExecutorFactory;
+import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.MySQLComQueryPacketExecutor;
 import com.jdd.global.shardingsphere.workshop.proxy.frontend.auth.MySQLAuthenticationHandler;
+import com.jdd.global.shardingsphere.workshop.proxy.frontend.command.MySQLUnsupportedCommandExecutor;
 import com.jdd.global.shardingsphere.workshop.proxy.transport.MySQLPacketPayload;
 import com.jdd.global.shardingsphere.workshop.proxy.transport.packet.MySQLPacket;
+import com.jdd.global.shardingsphere.workshop.proxy.transport.packet.command.MySQLCommandPacketType;
+import com.jdd.global.shardingsphere.workshop.proxy.transport.packet.command.query.MySQLComQueryPacket;
 import com.jdd.global.shardingsphere.workshop.proxy.transport.packet.error.MySQLErrPacketFactory;
 import com.jdd.global.shardingsphere.workshop.proxy.transport.packet.generic.MySQLEofPacket;
 import io.netty.buffer.ByteBuf;
@@ -21,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.concurrent.ExecutorService;
 
 /**
  * Frontend channel inbound handler.
@@ -34,9 +37,6 @@ public final class FrontendChannelInboundHandler extends ChannelInboundHandlerAd
     
     private boolean authorized;
     
-    private final ExecutorService executorService;
-    
-    
     @Override
     public void channelActive(final ChannelHandlerContext context) {
         authHandler.handshake(context);
@@ -48,7 +48,12 @@ public final class FrontendChannelInboundHandler extends ChannelInboundHandlerAd
             authorized = auth(context, (ByteBuf) message);
             return;
         }
-        executorService.execute(new CommandExecutorTask(context, message));
+        try (MySQLPacketPayload payload = new MySQLPacketPayload((ByteBuf) message)) {
+            executeCommand(context, payload);
+        } catch (final Exception ex) {
+            log.error("Exception occur: ", ex);
+            context.writeAndFlush(MySQLErrPacketFactory.newInstance(1, ex));
+        }
     }
     
     @Override
@@ -66,41 +71,34 @@ public final class FrontendChannelInboundHandler extends ChannelInboundHandlerAd
         return false;
     }
     
-    @RequiredArgsConstructor
-    private final class CommandExecutorTask implements Runnable {
-    
-        private final ChannelHandlerContext context;
-    
-        private final Object message;
-    
-        @Override
-        public void run() {
-            try (MySQLPacketPayload payload = new MySQLPacketPayload((ByteBuf) message)) {
-                executeCommand(context, payload);
-            } catch (final Exception ex) {
-                log.error("Exception occur: ", ex);
-                context.writeAndFlush(MySQLErrPacketFactory.newInstance(1, ex));
-            }
+    private void executeCommand(final ChannelHandlerContext context, final MySQLPacketPayload payload) throws SQLException {
+        CommandExecutor commandExecutor = createCommandExecutor(payload);
+        Collection<MySQLPacket> responsePackets = commandExecutor.execute();
+        for (MySQLPacket each : responsePackets) {
+            context.writeAndFlush(each);
         }
-    
-        private void executeCommand(final ChannelHandlerContext context, final MySQLPacketPayload payload) throws SQLException {
-            CommandExecutor commandExecutor = MySQLCommandExecutorFactory.newInstance(payload);
-            Collection<MySQLPacket> responsePackets = commandExecutor.execute();
-            for (MySQLPacket each : responsePackets) {
-                context.writeAndFlush(each);
-            }
-            if (commandExecutor instanceof ComQueryCommandExecutor && ((ComQueryCommandExecutor) commandExecutor).isQuery()) {
-                writeQueryData(context, (ComQueryCommandExecutor) commandExecutor, responsePackets.size());
-            }
+        if (commandExecutor instanceof ComQueryCommandExecutor && ((ComQueryCommandExecutor) commandExecutor).isQuery()) {
+            writeQueryData(context, (ComQueryCommandExecutor) commandExecutor, responsePackets.size());
         }
+    }
     
-        private void writeQueryData(final ChannelHandlerContext context, final ComQueryCommandExecutor queryCommandExecutor, final int headerPackagesCount) throws SQLException {
-            int currentSequenceId = 0;
-            while (queryCommandExecutor.next()) {
-                context.writeAndFlush(queryCommandExecutor.getQueryData());
-                currentSequenceId++;
-            }
-            context.writeAndFlush(new MySQLEofPacket(++currentSequenceId + headerPackagesCount));
+    private void writeQueryData(final ChannelHandlerContext context, final ComQueryCommandExecutor queryCommandExecutor, final int headerPackagesCount) throws SQLException {
+        int currentSequenceId = 0;
+        while (queryCommandExecutor.next()) {
+            context.writeAndFlush(queryCommandExecutor.getQueryData());
+            currentSequenceId++;
+        }
+        context.writeAndFlush(new MySQLEofPacket(++currentSequenceId + headerPackagesCount));
+    }
+    
+    private CommandExecutor createCommandExecutor(final MySQLPacketPayload payload) {
+        Preconditions.checkArgument(0 == payload.readInt1(), "Sequence ID of MySQL command packet must be `0`.");
+        MySQLCommandPacketType packetType = MySQLCommandPacketType.valueOf(payload.readInt1());
+        switch (packetType) {
+            case COM_QUERY:
+                return new MySQLComQueryPacketExecutor(new MySQLComQueryPacket(payload));
+            default:
+                return new MySQLUnsupportedCommandExecutor(packetType);
         }
     }
 }
