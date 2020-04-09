@@ -1,4 +1,5 @@
 
+
 grammar SQLStatement;
 
 import Symbol, Keyword, Literals;
@@ -52,5 +53,6 @@ columnValue
     ;
     
 identifier
-    : IDENTIFIER_
+    : IDENTIFIER_ | STRING_ | NUMBER_
     ;
+    
