@@ -6,9 +6,9 @@ import autogen.MySQLStatementParser.IdentifierContext;
 import autogen.MySQLStatementParser.SchemaNameContext;
 import autogen.MySQLStatementParser.UseContext;
 import shardingsphere.workshop.parser.statement.ASTNode;
-import shardingsphere.workshop.parser.statement.statement.UseStatement;
 import shardingsphere.workshop.parser.statement.segment.IdentifierSegment;
 import shardingsphere.workshop.parser.statement.segment.SchemeNameSegment;
+import shardingsphere.workshop.parser.statement.statement.UseStatement;
 
 /**
  * MySQL visitor.
