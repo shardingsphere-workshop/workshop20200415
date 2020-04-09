@@ -31,7 +31,7 @@ public final class Bootstrap {
         if (0 == args.length) {
             return DEFAULT_PORT;
         }
-        Integer paredPort = Ints.tryParse(args[0]);
-        return paredPort == null ? DEFAULT_PORT : paredPort;
+        Integer port = Ints.tryParse(args[0]);
+        return port == null ? DEFAULT_PORT : port;
     }
 }
