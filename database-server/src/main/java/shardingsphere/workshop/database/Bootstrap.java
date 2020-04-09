@@ -2,10 +2,9 @@
 package shardingsphere.workshop.database;
 
 import com.google.common.primitives.Ints;
-import shardingsphere.workshop.database.csv.CSVLogicSchema;
-import shardingsphere.workshop.database.netty.DatabaseServer;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import shardingsphere.workshop.database.netty.DatabaseServer;
 
 import java.io.IOException;
 
@@ -22,8 +21,7 @@ public final class Bootstrap {
      *
      * @param args startup arguments
      */
-    public static void main(final String[] args) throws IOException {
-        CSVLogicSchema.getInstance().init();
+    public static void main(final String[] args) {
         DatabaseServer.getInstance().start(getPort(args));
     }
     
