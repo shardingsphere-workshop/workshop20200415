@@ -1,8 +1,6 @@
 
 lexer grammar Alphabet;
 
-FOR_GENERATOR: 'DO NOT MATCH ANY THING, JUST FOR GENERATOR';
-
 fragment A:   [Aa];
 fragment B:   [Bb];
 fragment C:   [Cc];

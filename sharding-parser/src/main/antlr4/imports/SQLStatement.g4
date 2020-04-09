@@ -1,5 +1,4 @@
 
-
 grammar SQLStatement;
 
 import Symbol, Keyword, Literals;
