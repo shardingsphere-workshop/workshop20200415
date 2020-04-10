@@ -3,15 +3,15 @@ package shardingsphere.workshop.database.mysql;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
-import shardingsphere.workshop.database.mysql.packet.MySQLPacketPayload;
-import shardingsphere.workshop.database.mysql.packet.constant.MySQLServerErrorCode;
+import io.netty.channel.ChannelHandlerContext;
+import org.apache.commons.codec.digest.DigestUtils;
 import shardingsphere.workshop.database.mysql.packet.MySQLErrPacket;
 import shardingsphere.workshop.database.mysql.packet.MySQLOKPacket;
+import shardingsphere.workshop.database.mysql.packet.MySQLPacketPayload;
+import shardingsphere.workshop.database.mysql.packet.constant.MySQLServerErrorCode;
 import shardingsphere.workshop.database.mysql.packet.handshake.MySQLAuthPluginData;
 import shardingsphere.workshop.database.mysql.packet.handshake.MySQLHandshakePacket;
 import shardingsphere.workshop.database.mysql.packet.handshake.MySQLHandshakeResponse41Packet;
-import io.netty.channel.ChannelHandlerContext;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -64,7 +64,7 @@ public final class MySQLAuthenticationHandler {
         if (errorCode.isPresent()) {
             context.writeAndFlush(getMySQLErrPacket(errorCode.get(), context, response41));
         } else {
-            context.writeAndFlush(new MySQLOKPacket(response41.getSequenceId() + 1));
+            context.writeAndFlush(new MySQLOKPacket(2));
         }
         return true;
     }
@@ -100,9 +100,9 @@ public final class MySQLAuthenticationHandler {
     
     private MySQLErrPacket getMySQLErrPacket(final MySQLServerErrorCode errorCode, final ChannelHandlerContext context, final MySQLHandshakeResponse41Packet response41) {
         if (MySQLServerErrorCode.ER_DBACCESS_DENIED_ERROR == errorCode) {
-            return new MySQLErrPacket(response41.getSequenceId() + 1, MySQLServerErrorCode.ER_DBACCESS_DENIED_ERROR, response41.getUsername(), getHostAddress(context), response41.getDatabase());
+            return new MySQLErrPacket(2, MySQLServerErrorCode.ER_DBACCESS_DENIED_ERROR, response41.getUsername(), getHostAddress(context), response41.getDatabase());
         } else {
-            return new MySQLErrPacket(response41.getSequenceId() + 1, MySQLServerErrorCode.ER_ACCESS_DENIED_ERROR, response41.getUsername(), getHostAddress(context),
+            return new MySQLErrPacket(2, MySQLServerErrorCode.ER_ACCESS_DENIED_ERROR, response41.getUsername(), getHostAddress(context),
                 0 == response41.getAuthResponse().length ? "NO" : "YES");
         }
     }

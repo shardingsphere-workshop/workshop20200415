@@ -70,34 +70,16 @@ public final class FrontendChannelInboundHandler extends ChannelInboundHandlerAd
         return false;
     }
     
-    private void executeCommand(final ChannelHandlerContext context, final MySQLPacketPayload payload) throws SQLException {
-        Preconditions.checkArgument(0 == payload.readInt1(), "Sequence ID of MySQL command packet must be `0`.");
+    private void executeCommand(final ChannelHandlerContext context, final MySQLPacketPayload payload) {
         Preconditions.checkState(0x03 == payload.readInt1(), "only support COM_QUERY command type");
-        String sql = payload.readStringEOF();
-        String skipSQL = "select @@version_comment limit 1";
-        if (skipSQL.equals(sql.toLowerCase())) {
-            context.writeAndFlush(new MySQLOKPacket(0));
-            return;
-        }
         // TODO 1. Read SQL from payload, then system.out it
         // TODO 2. Return mock MySQLPacket to client (header: MySQLFieldCountPacket + MySQLColumnDefinition41Packet + MySQLEofPacket, content: MySQLTextResultSetRowPacket
         // TODO 3. Parse SQL, return actual data according to SQLStatement
-//        int currentSequenceId = 0;
-//        Collection<MySQLPacket> headerPackets = new LinkedList<>();
-        context.write(new MySQLFieldCountPacket(0, 1));
-        context.write(new MySQLColumnDefinition41Packet(1, 0, "sharding_db", "t_order", "t_order", "order_id", "order_id", 100, MySQLColumnType.MYSQL_TYPE_STRING,0));
-        context.write(new MySQLEofPacket(2));
-        context.write(new MySQLTextResultSetRowPacket(3, ImmutableList.of(100)));
-        context.write(new MySQLEofPacket(4));
+        context.write(new MySQLFieldCountPacket(1, 1));
+        context.write(new MySQLColumnDefinition41Packet(2, 0, "sharding_db", "t_order", "t_order", "order_id", "order_id", 100, MySQLColumnType.MYSQL_TYPE_STRING,0));
+        context.write(new MySQLEofPacket(3));
+        context.write(new MySQLTextResultSetRowPacket(4, ImmutableList.of(100)));
+        context.write(new MySQLEofPacket(5));
         context.flush();
-//        context.writeAndFlush(new MySQLEofPacket(++currentSequenceId));
-    
-//        context.writeAndFlush(new MySQLFieldCountPacket(++currentSequenceId, 0));
-//        headerPackets.add(new MySQLFieldCountPacket(++currentSequenceId, 1));
-//        headerPackets.add(new MySQLColumnDefinition41Packet(++currentSequenceId, 0, "sharding_db", "t_order", "t_order", "order_id", "order_id", 100, MySQLColumnType.MYSQL_TYPE_LONG,0));
-//        headerPackets.add(new MySQLEofPacket(++currentSequenceId));
-//        context.writeAndFlush(headerPackets);
-//        context.writeAndFlush(new MySQLTextResultSetRowPacket(++currentSequenceId, ImmutableList.of(100)));
-//        context.writeAndFlush(new MySQLEofPacket(++currentSequenceId));
     }
 }

@@ -17,8 +17,6 @@ import lombok.Setter;
 @Getter
 public final class MySQLHandshakeResponse41Packet {
     
-    private final int sequenceId;
-    
     private final int maxPacketSize;
     
     private final int characterSet;
@@ -34,7 +32,6 @@ public final class MySQLHandshakeResponse41Packet {
     private String authPluginName;
     
     public MySQLHandshakeResponse41Packet(final MySQLPacketPayload payload) {
-        sequenceId = payload.readInt1();
         capabilityFlags = payload.readInt4();
         maxPacketSize = payload.readInt4();
         characterSet = payload.readInt1();

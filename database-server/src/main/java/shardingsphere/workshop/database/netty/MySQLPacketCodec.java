@@ -1,6 +1,7 @@
 
 package shardingsphere.workshop.database.netty;
 
+import com.google.common.base.Preconditions;
 import shardingsphere.workshop.database.mysql.packet.MySQLPacket;
 import shardingsphere.workshop.database.mysql.packet.MySQLPacketPayload;
 import io.netty.buffer.ByteBuf;
@@ -50,7 +51,8 @@ public final class MySQLPacketCodec extends ByteToMessageCodec<MySQLPacket> {
             in.resetReaderIndex();
             return;
         }
-        out.add(in.readRetainedSlice(payloadLength + MySQLPacket.SEQUENCE_LENGTH));
+        in.skipBytes(MySQLPacket.SEQUENCE_LENGTH);
+        out.add(in.readRetainedSlice(payloadLength));
     }
     
     private void doEncode(final ChannelHandlerContext context, final MySQLPacket message, final ByteBuf out) {
