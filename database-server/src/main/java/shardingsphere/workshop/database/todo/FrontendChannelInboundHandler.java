@@ -1,29 +1,23 @@
 
-package shardingsphere.workshop.database.netty;
+package shardingsphere.workshop.database.todo;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import shardingsphere.workshop.database.mysql.MySQLAuthenticationHandler;
-import shardingsphere.workshop.database.mysql.packet.MySQLEofPacket;
-import shardingsphere.workshop.database.mysql.packet.MySQLErrPacketFactory;
-import shardingsphere.workshop.database.mysql.packet.MySQLOKPacket;
-import shardingsphere.workshop.database.mysql.packet.MySQLPacket;
-import shardingsphere.workshop.database.mysql.packet.MySQLPacketPayload;
-import shardingsphere.workshop.database.mysql.packet.constant.MySQLColumnType;
-import shardingsphere.workshop.database.mysql.packet.query.MySQLColumnDefinition41Packet;
-import shardingsphere.workshop.database.mysql.packet.query.MySQLFieldCountPacket;
-import shardingsphere.workshop.database.mysql.packet.query.MySQLTextResultSetRowPacket;
-
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import shardingsphere.workshop.database.fixture.MySQLAuthenticationHandler;
+import shardingsphere.workshop.database.todo.packet.MySQLEofPacket;
+import shardingsphere.workshop.database.fixture.packet.MySQLErrPacketFactory;
+import shardingsphere.workshop.database.fixture.packet.MySQLOKPacket;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacket;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacketPayload;
+import shardingsphere.workshop.database.fixture.packet.constant.MySQLColumnType;
+import shardingsphere.workshop.database.todo.packet.MySQLColumnDefinition41Packet;
+import shardingsphere.workshop.database.todo.packet.MySQLFieldCountPacket;
+import shardingsphere.workshop.database.todo.packet.MySQLTextResultSetRowPacket;
 
 /**
  * Frontend channel inbound handler.

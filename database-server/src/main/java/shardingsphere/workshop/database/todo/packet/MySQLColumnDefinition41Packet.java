@@ -1,10 +1,10 @@
 
-package shardingsphere.workshop.database.mysql.packet.query;
+package shardingsphere.workshop.database.todo.packet;
 
-import shardingsphere.workshop.database.mysql.packet.MySQLPacket;
-import shardingsphere.workshop.database.mysql.packet.MySQLPacketPayload;
-import shardingsphere.workshop.database.mysql.packet.constant.MySQLColumnType;
-import shardingsphere.workshop.database.mysql.packet.constant.MySQLServerInfo;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacket;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacketPayload;
+import shardingsphere.workshop.database.fixture.packet.constant.MySQLColumnType;
+import shardingsphere.workshop.database.fixture.packet.constant.MySQLServerInfo;
 import lombok.Getter;
 
 /**

@@ -1,10 +1,11 @@
 
-package shardingsphere.workshop.database.netty;
+package shardingsphere.workshop.database.fixture;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import lombok.RequiredArgsConstructor;
+import shardingsphere.workshop.database.todo.FrontendChannelInboundHandler;
 
 /**
  * Channel initializer.

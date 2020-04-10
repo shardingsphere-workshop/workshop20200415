@@ -1,17 +1,17 @@
 
-package shardingsphere.workshop.database.mysql;
+package shardingsphere.workshop.database.fixture;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.commons.codec.digest.DigestUtils;
-import shardingsphere.workshop.database.mysql.packet.MySQLErrPacket;
-import shardingsphere.workshop.database.mysql.packet.MySQLOKPacket;
-import shardingsphere.workshop.database.mysql.packet.MySQLPacketPayload;
-import shardingsphere.workshop.database.mysql.packet.constant.MySQLServerErrorCode;
-import shardingsphere.workshop.database.mysql.packet.handshake.MySQLAuthPluginData;
-import shardingsphere.workshop.database.mysql.packet.handshake.MySQLHandshakePacket;
-import shardingsphere.workshop.database.mysql.packet.handshake.MySQLHandshakeResponse41Packet;
+import shardingsphere.workshop.database.fixture.packet.MySQLErrPacket;
+import shardingsphere.workshop.database.fixture.packet.MySQLOKPacket;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacketPayload;
+import shardingsphere.workshop.database.fixture.packet.constant.MySQLServerErrorCode;
+import shardingsphere.workshop.database.fixture.packet.handshake.MySQLAuthPluginData;
+import shardingsphere.workshop.database.fixture.packet.handshake.MySQLHandshakePacket;
+import shardingsphere.workshop.database.fixture.packet.handshake.MySQLHandshakeResponse41Packet;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;

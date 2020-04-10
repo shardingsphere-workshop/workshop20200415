@@ -1,5 +1,5 @@
 
-package shardingsphere.workshop.database.mysql.packet.handshake;
+package shardingsphere.workshop.database.fixture.packet.handshake;
 
 import com.google.common.primitives.Bytes;
 import lombok.Getter;

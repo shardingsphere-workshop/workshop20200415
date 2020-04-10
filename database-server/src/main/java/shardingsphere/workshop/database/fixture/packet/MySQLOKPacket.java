@@ -1,7 +1,7 @@
 
-package shardingsphere.workshop.database.mysql.packet;
+package shardingsphere.workshop.database.fixture.packet;
 
-import shardingsphere.workshop.database.mysql.packet.constant.MySQLStatusFlag;
+import shardingsphere.workshop.database.fixture.packet.constant.MySQLStatusFlag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

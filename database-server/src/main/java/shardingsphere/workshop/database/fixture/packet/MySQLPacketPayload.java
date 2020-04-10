@@ -1,5 +1,5 @@
 
-package shardingsphere.workshop.database.mysql.packet;
+package shardingsphere.workshop.database.fixture.packet;
 
 import com.google.common.base.Strings;
 import io.netty.buffer.ByteBuf;

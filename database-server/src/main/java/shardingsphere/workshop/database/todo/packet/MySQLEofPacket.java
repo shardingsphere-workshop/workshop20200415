@@ -1,9 +1,11 @@
 
-package shardingsphere.workshop.database.mysql.packet;
+package shardingsphere.workshop.database.todo.packet;
 
-import shardingsphere.workshop.database.mysql.packet.constant.MySQLStatusFlag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacket;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacketPayload;
+import shardingsphere.workshop.database.fixture.packet.constant.MySQLStatusFlag;
 
 /**
  * EOF packet protocol for MySQL.

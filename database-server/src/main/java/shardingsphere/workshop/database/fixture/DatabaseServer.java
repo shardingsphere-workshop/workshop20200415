@@ -1,5 +1,5 @@
 
-package shardingsphere.workshop.database.netty;
+package shardingsphere.workshop.database.fixture;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;

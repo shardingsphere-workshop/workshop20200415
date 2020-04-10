@@ -1,8 +1,8 @@
 
-package shardingsphere.workshop.database.mysql.packet.handshake;
+package shardingsphere.workshop.database.fixture.packet.handshake;
 
-import shardingsphere.workshop.database.mysql.packet.MySQLPacketPayload;
-import shardingsphere.workshop.database.mysql.packet.constant.MySQLCapabilityFlag;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacketPayload;
+import shardingsphere.workshop.database.fixture.packet.constant.MySQLCapabilityFlag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

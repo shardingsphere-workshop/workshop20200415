@@ -1,7 +1,7 @@
 
-package shardingsphere.workshop.database.mysql.packet;
+package shardingsphere.workshop.database.fixture.packet;
 
-import shardingsphere.workshop.database.mysql.packet.constant.MySQLServerErrorCode;
+import shardingsphere.workshop.database.fixture.packet.constant.MySQLServerErrorCode;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

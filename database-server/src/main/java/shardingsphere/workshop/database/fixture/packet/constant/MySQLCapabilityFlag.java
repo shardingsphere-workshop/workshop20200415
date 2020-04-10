@@ -1,5 +1,5 @@
 
-package shardingsphere.workshop.database.mysql.packet.constant;
+package shardingsphere.workshop.database.fixture.packet.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

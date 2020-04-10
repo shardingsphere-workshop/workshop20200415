@@ -1,5 +1,5 @@
 
-package shardingsphere.workshop.database.mysql.packet;
+package shardingsphere.workshop.database.fixture.packet;
 
 /**
  * Database packet for MySQL.

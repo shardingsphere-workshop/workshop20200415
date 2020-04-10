@@ -4,9 +4,7 @@ package shardingsphere.workshop.database;
 import com.google.common.primitives.Ints;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import shardingsphere.workshop.database.netty.DatabaseServer;
-
-import java.io.IOException;
+import shardingsphere.workshop.database.fixture.DatabaseServer;
 
 /**
  * Database-server Bootstrap.

@@ -1,9 +1,9 @@
 
-package shardingsphere.workshop.database.netty;
+package shardingsphere.workshop.database.fixture;
 
 import com.google.common.base.Preconditions;
-import shardingsphere.workshop.database.mysql.packet.MySQLPacket;
-import shardingsphere.workshop.database.mysql.packet.MySQLPacketPayload;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacket;
+import shardingsphere.workshop.database.fixture.packet.MySQLPacketPayload;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
