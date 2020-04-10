@@ -4,10 +4,10 @@ package shardingsphere.workshop.database.proxy;
 import com.google.common.primitives.Ints;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import shardingsphere.workshop.database.proxy.fixture.DatabaseServer;
+import shardingsphere.workshop.database.proxy.fixture.DatabaseProxy;
 
 /**
- * Database-server Bootstrap.
+ * Database-proxy Bootstrap.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Bootstrap {
@@ -20,7 +20,7 @@ public final class Bootstrap {
      * @param args startup arguments
      */
     public static void main(final String[] args) {
-        DatabaseServer.getInstance().start(getPort(args));
+        DatabaseProxy.getInstance().start(getPort(args));
     }
     
     private static int getPort(final String[] args) {

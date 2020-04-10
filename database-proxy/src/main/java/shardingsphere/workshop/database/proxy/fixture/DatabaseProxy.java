@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 
 /**
- * Database-server.
+ * Database-proxy.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class DatabaseServer {
+public final class DatabaseProxy {
     
-    private static final DatabaseServer INSTANCE = new DatabaseServer();
+    private static final DatabaseProxy INSTANCE = new DatabaseProxy();
     
     private EventLoopGroup bossGroup;
     
@@ -32,7 +32,7 @@ public final class DatabaseServer {
      *
      * @return instance of proxy context.
      */
-    public static DatabaseServer getInstance() {
+    public static DatabaseProxy getInstance() {
         return INSTANCE;
     }
     
