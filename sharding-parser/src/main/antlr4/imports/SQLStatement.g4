@@ -23,10 +23,6 @@ assignmentValue
     : identifier
     ;
     
-select 
-    : SELECT columnNames fromClause? whereClause?
-    ;
-
 columnNames
     : columnName (COMMA_ columnName)*
     ;
@@ -34,20 +30,8 @@ columnNames
 columnName
     : identifier
     ;
-
-fromClause
-    : FROM tableName
-    ;
-    
+   
 tableName
-    : identifier
-    ;
-    
-whereClause
-    : WHERE columnName EQ_ columnValue
-    ;
-
-columnValue
     : identifier
     ;
     
