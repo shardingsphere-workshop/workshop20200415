@@ -18,17 +18,16 @@
 package shardingsphere.workshop.parser.engine;
 
 import org.junit.Test;
-import shardingsphere.workshop.parser.statement.statement.UseStatement;
+import shardingsphere.workshop.parser.ParserEngine;
+import shardingsphere.workshop.parser.select.SelectStatement;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-
-public final class ParseEngineTest {
+public final class ParserEngineTest {
+    
+    private final ParserEngine engine = new ParserEngine();
     
     @Test
     public void testParse() {
-        String sql = "use sharding_db";
-        UseStatement useStatement = (UseStatement) ParseEngine.parse(sql);
-        assertThat(useStatement.getSchemeName().getIdentifier().getValue(), is("sharding_db"));
+        SelectStatement selectStatement = (SelectStatement) engine.parse("select * from t_order where order_id=1");
+        System.out.println(selectStatement);
     }
 }
