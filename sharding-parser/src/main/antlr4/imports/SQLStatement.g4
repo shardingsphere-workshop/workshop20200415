@@ -24,7 +24,7 @@ assignmentValue
     ;
     
 columnNames
-    : columnName (COMMA_ columnName)*
+    : LP_ columnName (COMMA_ columnName)* RP_
     ;
 
 columnName
